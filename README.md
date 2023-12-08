@@ -175,7 +175,7 @@ Edit the layout in `app` or content in `data`. With live reloading, the pages au
 
 `data/headerNavLinks.js` - navigation links.
 
-`data/logo.svg` - replace with your own logo.
+`data/logoArt.svg` - replace with your own logo.
 
 `data/blog` - replace with your own blog posts.
 
