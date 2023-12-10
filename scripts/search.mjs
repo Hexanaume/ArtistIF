@@ -1,41 +1,38 @@
+import axios from "axios";
 
+function addDbpediaPrefixes(requestString) {
+  // append the prefixes to the request string
+  const prefixes = 'PREFIX owl: <http://www.w3.org/2002/07/owl#> \n' +
+    'PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n' +
+    'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n' +
+    'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n' +
+    'PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n' +
+    'PREFIX dc: <http://purl.org/dc/elements/1.1/> \n' +
+    'PREFIX : <http://dbpedia.org/resource/> \n' +
+    'PREFIX dbpedia2: <http://dbpedia.org/property/> \n' +
+    'PREFIX dbpedia: <http://dbpedia.org/> \n' +
+    'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n\n';
 
-(function() {
-  document.getElementById("requete").innerHTML = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-\n
-SELECT * WHERE {
-...
-}`;
-})();
+  return prefixes + requestString;
+}
 
-function rechercher() {
-  var contenu_requete = document.getElementById("requete").value;
+export async function rechercher(requestString) {
 
-  // Encodage de l'URL à transmettre à DBPedia
-  var url_base = "http://dbpedia.org/sparql";
-  var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+  // Ajout des préfixes
+  requestString = addDbpediaPrefixes(requestString);
 
-  // Requête HTTP et affichage des résultats
-  var xmlhttp = new XMLHttpRequest();
+  // Requête SPARQL
+  const encodedQuery = encodeURIComponent(requestString);
 
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState === 4 && this.status === 200) {
-      return JSON.parse(this.responseText);
-      //afficherResultats(results);
-    }
-  };
+  // Requête HTTP
+  const url = 'https://dbpedia.org/sparql?query=' + encodedQuery + '&format=json';
 
-  xmlhttp.open("GET", url, true);
-  xmlhttp.send();
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Affichage des résultats dans un tableau

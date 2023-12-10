@@ -1,12 +1,35 @@
-import React, { Component, useState } from 'react';
-import { ReactDOM } from 'react';
+"use client";
+import React, { Component, useState } from "react";
+import { ReactDOM } from "react";
 
 function SearchBar() {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [searchTerm, setSearchTerm] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
     const handleChange = (event) => {
         setSearchTerm(event.target.value);
+        console.log(searchTerm);
+    };
+
+    // make a call to the api to get the search results
+
+    const handleSearch = async () => {
+        try {
+            const res = await fetch(
+                `http://localhost:3000/api/search?query=${searchTerm}`,
+            );
+
+            if (!res.ok) {
+                throw new Error(res.statusText);
+            }
+
+            const results = await res.json();
+            setSearchResults(results);
+
+            console.log(results);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
@@ -36,6 +59,10 @@ function SearchBar() {
                         id="search"
                         placeholder="Search something.."
                         onChange={handleChange}
+                    />
+                    <button
+                        className="absolute right-0 top-0 h-full w-12 rounded-l-lg text-gray-600 transition-colors duration-300 hover:text-gray-900 focus:outline-none peer-focus:bg-gray-300 peer-focus:text-gray-900"
+                        onClick={handleSearch}
                     />
                 </div>
             </div>
