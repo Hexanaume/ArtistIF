@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
         // On recherche les résultats correspondant à la requête de l'utilisateur
         const results = await rechercher(q);
-        console.log(results);
+        // On renvoie les résultats
         res.status(200).json(results);
     } catch (e) {
         res.status(500).json({ error: e.message });
