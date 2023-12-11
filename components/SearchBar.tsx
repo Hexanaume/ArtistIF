@@ -19,6 +19,8 @@ function SearchBar() {
                 `http://localhost:3000/api/search?query=${searchTerm}`,
             );
 
+            console.log(res);
+
             if (!res.ok) {
                 throw new Error(res.statusText);
             }

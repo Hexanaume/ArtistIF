@@ -25,10 +25,11 @@ export async function rechercher(requestString) {
   const encodedQuery = encodeURIComponent(requestString);
 
   // Requête HTTP
-  const url = 'https://dbpedia.org/sparql?query=' + encodedQuery + '&format=json';
+  const url = 'http://dbpedia.org/sparql?query=' + encodedQuery + '&format=json';
 
   try {
     const response = await axios.get(url);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
