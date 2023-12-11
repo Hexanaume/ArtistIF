@@ -1,37 +1,19 @@
-import { AlgoliaButton } from "pliny/search/AlgoliaButton";
-import { KBarButton } from "pliny/search/KBarButton";
-import siteMetadata from "@/data/siteMetadata";
+import { AlgoliaButton } from 'pliny/search/AlgoliaButton';
+import { KBarButton } from 'pliny/search/KBarButton';
+import siteMetadata from '@/data/siteMetadata';
+import React, {useState} from 'react';
 
-const SearchButton = () => {
-    if (
-        siteMetadata.search &&
-        (siteMetadata.search.provider === "algolia" ||
-            siteMetadata.search.provider === "kbar")
-    ) {
-        const SearchButtonWrapper =
-            siteMetadata.search.provider === "algolia"
-                ? AlgoliaButton
-                : KBarButton;
+function SearchButton () {
 
-        return (
-            <SearchButtonWrapper aria-label="Search">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="h-6 w-6 text-gray-900 dark:text-gray-100"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                    />
-                </svg>
-            </SearchButtonWrapper>
-        );
-    }
-};
+  const [searchTerm, setSearchTerm] = useState("");
+  const onSearch = (event) => {
+    setSearchTerm(event.target.value);
+    console.log("test");
+  }
 
-export default SearchButton;
+    return (
+      <button onClick={onSearch} type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+    )
+}
+
+export default SearchButton

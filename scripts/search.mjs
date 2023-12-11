@@ -16,14 +16,32 @@ function addDbpediaPrefixes(requestString) {
   return prefixes + requestString;
 }
 
-export async function rechercher(requestString) {
+function requestArtists(NomArtists){
+  let requestString;
+  requestString = `SELECT distinct ?artist ?comments ?lang WHERE {
+
+    ?artist dbo:wikiPageLength ?pageLength .
+    ?artist a dbo:Artist.
+    ?artist rdfs:label ?label .
+    ?artist rdfs:comment ?comments .
+    ?comments rdfs:label ?lang .
+    filter contains(?label,"${NomArtists}")
+    #filter contains(?lang,"en")
+  
+  }ORDER BY desc(?pageLength)`;
+
+  return requestString;
+}
+
+export async function rechercher(inputString) {
 
   // Ajout des préfixes
-  requestString = addDbpediaPrefixes(requestString);
+  let requestString;
+  requestString = addDbpediaPrefixes(requestArtists(inputString));
 
   // Requête SPARQL
   const encodedQuery = encodeURIComponent(requestString);
-
+  console.log(requestString);
   // Requête HTTP
   const url = 'http://dbpedia.org/sparql?query=' + encodedQuery + '&format=json';
 

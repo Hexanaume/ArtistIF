@@ -1,75 +1,43 @@
 "use client";
-import React, { Component, useState } from "react";
-import { ReactDOM } from "react";
+import SearchButton from "@/components/SearchButton";
+import React, {useState} from 'react';
+import { rechercher } from "../scripts/search.mjs";
 
-function SearchBar() {
+const SearchBar = () => {
+
     const [searchTerm, setSearchTerm] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-
     const handleChange = (event) => {
         setSearchTerm(event.target.value);
-        console.log(searchTerm);
-    };
-
-    // make a call to the api to get the search results
+        console.log("test : "+ searchTerm);
+    }
 
     const handleSearch = async () => {
-        try {
-            const res = await fetch(
-                `http://localhost:3000/api/search?query=${searchTerm}`,
-            );
-
-            console.log(res);
-
-            if (!res.ok) {
-                throw new Error(res.statusText);
-            }
-
-            const results = await res.json();
-            setSearchResults(results);
-
-            console.log(results);
-        } catch (err) {
-            console.error(err);
-        }
-    };
+        console.log("searchTerm: "+searchTerm);
+        return await rechercher(searchTerm);
+    }
 
     return (
         <>
-            <div className="mx-auto max-w-md">
-                <div className="relative flex h-12 w-full items-center overflow-hidden rounded-lg bg-white focus-within:shadow-lg">
-                    <div className="grid h-full w-12 place-items-center text-gray-300">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
+            <div>
+                <form>
+                    <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <div className="relative">
+                        <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                            </svg>
+                        </div>
+                        <input onChange={handleChange} type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required/>
+                        <button onClick={handleSearch} type="button" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                     </div>
-
-                    <input
-                        className="peer h-full w-full pr-2 text-sm text-gray-700 outline-none"
-                        type="text"
-                        id="search"
-                        placeholder="Search something.."
-                        onChange={handleChange}
-                    />
-                    <button
-                        className="absolute right-0 top-0 h-full w-12 rounded-l-lg text-gray-600 transition-colors duration-300 hover:text-gray-900 focus:outline-none peer-focus:bg-gray-300 peer-focus:text-gray-900"
-                        onClick={handleSearch}
-                    />
-                </div>
+                </form>
             </div>
+
         </>
-    );
+);
+}
+function onSearch(){
+    console.log("test");
 }
 
-export default SearchBar;
+export default SearchBar
