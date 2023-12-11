@@ -18,17 +18,15 @@ function addDbpediaPrefixes(requestString) {
 
 function requestArtists(NomArtists){
   let requestString;
-  requestString = `SELECT distinct ?artist ?comments ?lang WHERE {
+  requestString = `SELECT distinct ?artist WHERE {
 
     ?artist dbo:wikiPageLength ?pageLength .
     ?artist a dbo:Artist.
     ?artist rdfs:label ?label .
-    ?artist rdfs:comment ?comments .
-    ?comments rdfs:label ?lang .
-    filter contains(?label,"${NomArtists}")
-    #filter contains(?lang,"en")
+    filter contains(?label,"${NomArtists}").
   
-  }ORDER BY desc(?pageLength)`;
+  } ORDER BY desc(?pageLength)
+  LIMIT 20.`;
 
   return requestString;
 }
@@ -39,19 +37,18 @@ export async function rechercher(inputString) {
   let requestString;
   requestString = addDbpediaPrefixes(requestArtists(inputString));
 
-  // Requête SPARQL
-  const encodedQuery = encodeURIComponent(requestString);
-  console.log(requestString);
-  // Requête HTTP
-  const url = 'http://dbpedia.org/sparql?query=' + encodedQuery + '&format=json';
+  console.log("requestString",requestString);
+
+  const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(requestString) + "&format=json";
+  console.log(url);
 
   try {
-    const response = await axios.get(url);
-    console.log(response.data);
-    return response.data;
+    const response = await fetch(url);
+    return await response.json();
   } catch (error) {
-    console.error(error);
+    return console.log("Erreur : " + error);
   }
+
 }
 
 // Affichage des résultats dans un tableau
