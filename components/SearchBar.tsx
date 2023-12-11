@@ -1,9 +1,9 @@
-"use client";
-import React, { Component, useState } from "react";
+'use client';
+import React, { Component, useState } from 'react';
 import { ReactDOM } from "react";
 
 function SearchBar() {
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
     const handleChange = (event) => {
@@ -16,7 +16,9 @@ function SearchBar() {
     const handleSearch = async () => {
         try {
             const res = await fetch(
-                `http://localhost:3000/api/search?query=${searchTerm}`,
+                `http://localhost:3000/api/search?query=${encodeURIComponent(
+                    searchTerm,
+                )}`,
             );
 
             console.log(res);
