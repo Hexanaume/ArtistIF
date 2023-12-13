@@ -44,18 +44,20 @@ export default function Home({ posts }) {
                 </div>
             </div>
 
-            {searchResults.length > 0 &&
-                searchResults.map((result: SearchResult, index) => {
-                    return (
-                        <Card
-                            title={result.name.value}
-                            description={result.abstract.value}
-                            imgSrc={'https://picsum.photos/200/300'}
-                            href={result.artist.value}
-                            key={index}
-                        />
-                    );
-                })}
+            <div className="flex flex-row flex-wrap">
+                {searchResults.length > 0 &&
+                    searchResults.map((result: SearchResult, index) => {
+                        return (
+                            <Card
+                                title={result.name.value}
+                                description={result.abstract.value}
+                                imgSrc={'https://picsum.photos/200/300'}
+                                href={result.artist.value}
+                                key={index}
+                            />
+                        );
+                    })}
+            </div>
         </>
     );
 }
