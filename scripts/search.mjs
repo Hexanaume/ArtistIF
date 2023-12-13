@@ -1,4 +1,4 @@
-import axios from "axios";
+/* eslint-disable prettier/prettier */
 
 function addDbpediaPrefixes(requestString) {
   // append the prefixes to the request string
@@ -31,6 +31,21 @@ function requestArtists(NomArtists){
   return requestString;
 }
 
+function requestInfosArtists(urlArtist){
+  let requestString;
+  requestString = `SELECT distinct ?artist ?label ?abstract  WHERE {
+
+    ?artist dbo:wikiPageLength ?pageLength .
+    ?artist a dbo:Artist.
+    ?artist rdfs:label ?label .
+    ?artist dbo:abstract ?abstract .
+    filter contains(?artist,"${urlArtist}").
+  
+  } ORDER BY desc(?pageLength)`;
+
+  return requestString;
+}
+
 export async function rechercher(inputString) {
 
   // Ajout des préfixes
@@ -50,7 +65,24 @@ export async function rechercher(inputString) {
   }
 
 }
+export async function getInfosArtist(urlArtist){
+  // Ajout des préfixes
+  let requestString;
+  requestString = addDbpediaPrefixes(requestInfosArtists(urlArtist));
 
+  console.log("requestString",requestString);
+
+  const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(requestString) + "&format=json";
+  console.log(url);
+
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (error) {
+    return console.log("Erreur : " + error);
+  }
+
+}
 // Affichage des résultats dans un tableau
 function afficherResultats(data)
 {
