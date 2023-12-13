@@ -19,9 +19,7 @@ export default function Home({ posts }) {
                         Welcome to Artistif
                     </h1>
 
-                    <p>
-                        test pour la fiche détaillée <p>Leonardo </p>
-                    </p>
+                    <p>test pour la fiche détaillée</p>
                     <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
                         {siteMetadata.description}
                     </p>
@@ -34,20 +32,9 @@ export default function Home({ posts }) {
                 <Lien />
             </div>
             <div>
-                <DetailledCard
-                    title="Mona Lisa"
-                    imgSrc=""
-                    author="Leonardo da Vinci"
-                    date="1503"
-                    comment="test"
-                    era="Renaissance"
-                    storage="Louvre"
-                    technique="Oil on poplar"
-                    price="1 billion"
-                />
+                <ButtonTest />
             </div>
-            <div>
-            </div>
+            <div></div>
         </>
     );
 }
