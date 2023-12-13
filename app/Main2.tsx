@@ -26,8 +26,8 @@ export default function Home({ posts }) {
                 <SearchBar />
             </div>
             <div>
-                <Lien />
-            </div>
+                <DetailledCard title="hey" imgSrc="" author="jjhgfhj" date="" comment="" era="" storage="" technique="" price=""/>
+            </div>"
         </>
     );
 }
