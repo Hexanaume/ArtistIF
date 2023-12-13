@@ -6,6 +6,7 @@ import siteMetadata from '@/data/siteMetadata';
 import { formatDate } from 'pliny/utils/formatDate';
 import NewsletterForm from 'pliny/ui/NewsletterForm';
 import ButtonTest from '@/components/ButtonTest';
+import DetailledCard from '@/components/DetailledCard';
 
 const MAX_DISPLAY = 5;
 
@@ -32,6 +33,19 @@ export default function Home({ posts }) {
             </div>
             <div>
                 <Lien />
+            </div>
+            <div>
+                <DetailledCard
+                    title="Mona Lisa"
+                    imgSrc=""
+                    author="Leonardo da Vinci"
+                    date="1503"
+                    comment="test"
+                    era="Renaissance"
+                    storage="Louvre"
+                    technique="Oil on poplar"
+                    price="1 billion"
+                />
             </div>
             <div>
                 <ButtonTest />
