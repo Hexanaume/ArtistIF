@@ -5,6 +5,7 @@ import Lien from '@/components/Lien';
 import siteMetadata from '@/data/siteMetadata';
 import { formatDate } from 'pliny/utils/formatDate';
 import NewsletterForm from 'pliny/ui/NewsletterForm';
+import ButtonTest from '@/components/ButtonTest';
 
 const MAX_DISPLAY = 5;
 
@@ -17,7 +18,10 @@ export default function Home({ posts }) {
                         Welcome to Artistif
                     </h1>
 
-                    <p> test pour la fiche détaillée <p>Leonardo </p></p>
+                    <p>
+                        {' '}
+                        test pour la fiche détaillée <p>Leonardo </p>
+                    </p>
                     <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
                         {siteMetadata.description}
                     </p>
@@ -28,6 +32,9 @@ export default function Home({ posts }) {
             </div>
             <div>
                 <Lien />
+            </div>
+            <div>
+                <ButtonTest />
             </div>
         </>
     );
