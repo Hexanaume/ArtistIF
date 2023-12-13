@@ -18,14 +18,31 @@ function addDbpediaPrefixes(requestString) {
 
 function requestArtists(NomArtists){
   let requestString;
-  requestString = `SELECT distinct ?artist WHERE {
+  requestString = `
+SELECT distinct ?artist ?name ?labelMovement ?abstract WHERE {
+    ?artist a foaf:Person .
+    {
+      ?artist dbo:movement ?movement .
+    }
+    UNION
+    {
+      ?artist dbp:movement ?movement .
+    }
+    ?movement rdfs:label ?labelMovement .
+    filter langMatches(lang(?labelMovement),"en").
 
-    ?artist dbo:wikiPageLength ?pageLength .
-    ?artist a dbo:Artist.
-    ?artist rdfs:label ?label .
-    filter contains(?label,"${NomArtists}").
-  
-  } ORDER BY desc(?pageLength)
+    ?artist dbp:name ?name .
+    ?artist dbo:abstract ?abstract .
+    ?thing dbo:author ?artist .
+
+    #convert name into string
+    bind(str(?name) as ?label)
+    
+    #filtrer pour avoir seulement des noms en anglais
+    filter langMatches(lang(?name),"en").
+    filter langMatches(lang(?abstract),"en").
+    filter contains(?label,"Michel").
+  }
   LIMIT 20.`;
 
   return requestString;
@@ -44,7 +61,10 @@ export async function rechercher(inputString) {
 
   try {
     const response = await fetch(url);
-    return await response.json();
+
+    const responseJson = await response.json();
+    console.log(responseJson.results.bindings);
+    return responseJson.results.bindings;
   } catch (error) {
     return console.log("Erreur : " + error);
   }

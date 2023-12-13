@@ -3,9 +3,11 @@ import Tag from '@/components/Tag';
 import Link from '@/components/Link';
 import SearchBar from '@/components/SearchBar';
 import siteMetadata from '@/data/siteMetadata';
+import Card, { SearchResult } from '@/components/Card';
 import { formatDate } from 'pliny/utils/formatDate';
 import NewsletterForm from 'pliny/ui/NewsletterForm';
 import { useState } from 'react';
+import json from 'refractor/lang/json';
 
 const MAX_DISPLAY = 5;
 
@@ -41,6 +43,19 @@ export default function Home({ posts }) {
                     <SearchBar onSearch={handleSearch} />
                 </div>
             </div>
+
+            {searchResults.length > 0 &&
+                searchResults.map((result: SearchResult, index) => {
+                    return (
+                        <Card
+                            title={result.name.value}
+                            description={result.abstract.value}
+                            imgSrc={'https://picsum.photos/200/300'}
+                            href={result.artist.value}
+                            key={index}
+                        />
+                    );
+                })}
         </>
     );
 }
