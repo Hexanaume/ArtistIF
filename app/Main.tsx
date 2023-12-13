@@ -1,6 +1,7 @@
 import Tag from '@/components/Tag';
 import Link from '@/components/Link';
 import SearchBar from '@/components/SearchBar';
+import Lien from '@/components/Lien';
 import siteMetadata from '@/data/siteMetadata';
 import { formatDate } from 'pliny/utils/formatDate';
 import NewsletterForm from 'pliny/ui/NewsletterForm';
@@ -15,6 +16,8 @@ export default function Home({ posts }) {
                     <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
                         Welcome to Artistif
                     </h1>
+
+                    <p> test pour la fiche détaillée <p>Leonardo </p></p>
                     <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
                         {siteMetadata.description}
                     </p>
@@ -22,6 +25,9 @@ export default function Home({ posts }) {
             </div>
             <div>
                 <SearchBar />
+            </div>
+            <div>
+                <Lien />
             </div>
         </>
     );
