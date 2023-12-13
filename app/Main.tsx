@@ -18,6 +18,15 @@ export default function Home({ posts }) {
         setSearchResults(results);
     };
 
+    function truncateText(text, maxLength) {
+      if (text.length > maxLength) {
+        return text.substring(0, maxLength - 3) + '...';
+      } else {
+        return text;
+      }
+    }
+    
+
     return (
         <>
             {searchResults.length === 0 && (
@@ -36,8 +45,8 @@ export default function Home({ posts }) {
                 <div
                     className={`transform ${
                         searchResults.length > 0
-                            ? 'translate-y-0 transition-transform'
-                            : '-translate-y-10 transition-transform'
+                            ? '-translate-y-10 transition-transform'
+                            : 'transition-transform'
                     }`}
                 >
                     <SearchBar onSearch={handleSearch} />
@@ -50,7 +59,7 @@ export default function Home({ posts }) {
                         return (
                             <Card
                                 title={result.name.value}
-                                description={result.abstract.value}
+                                description={truncateText(result.abstract.value, 144)}
                                 imgSrc={'https://picsum.photos/200/300'}
                                 href={result.artist.value}
                                 key={index}
