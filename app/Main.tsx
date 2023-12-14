@@ -19,13 +19,12 @@ export default function Home({ posts }) {
     };
 
     function truncateText(text, maxLength) {
-      if (text.length > maxLength) {
-        return text.substring(0, maxLength - 3) + '...';
-      } else {
-        return text;
-      }
+        if (text.length > maxLength) {
+            return text.substring(0, maxLength - 3) + '...';
+        } else {
+            return text;
+        }
     }
-    
 
     return (
         <>
@@ -59,8 +58,11 @@ export default function Home({ posts }) {
                         return (
                             <Card
                                 title={result.name.value}
-                                description={truncateText(result.abstract.value, 144)}
-                                imgSrc={'https://picsum.photos/200/300'}
+                                description={truncateText(
+                                    result.abstract.value,
+                                    144,
+                                )}
+                                imgSrc={result.picture.value}
                                 href={result.artist.value}
                                 key={index}
                             />

@@ -9304,6 +9304,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-spinners@npm:^0.13.8":
+  version: 0.13.8
+  resolution: "react-spinners@npm:0.13.8"
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 8564af7bf5b5be84665816fb815ebfc0a04cb899554c6e6a28a8d8ccfa75cbd8096bd99ec202f1fc9bcfee9133e9f5170484f42332f2fe58c6f7ade31f307a50
+  languageName: node
+  linkType: hard
+
 "react-virtual@npm:^2.8.2":
   version: 2.10.4
   resolution: "react-virtual@npm:2.10.4"
@@ -10770,6 +10780,7 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:^0.4.1"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    react-spinners: "npm:^0.13.8"
     reading-time: "npm:1.5.0"
     rehype-autolink-headings: "npm:^6.1.0"
     rehype-citation: "npm:^1.0.2"
