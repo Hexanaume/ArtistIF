@@ -8,6 +8,7 @@ import { formatDate } from 'pliny/utils/formatDate';
 import NewsletterForm from 'pliny/ui/NewsletterForm';
 import { useState } from 'react';
 import json from 'refractor/lang/json';
+import SearchTypeCard from '@/components/SearchTypeCard';
 
 const MAX_DISPLAY = 5;
 
@@ -28,6 +29,8 @@ export default function Home({ posts }) {
 
     return (
         <>
+            {/*create three checkboxes to toggle between : artist, artwork, movement*/}
+
             {searchResults.length === 0 && (
                 <div className="divide-y divide-gray-200 dark:divide-gray-700">
                     <div className="flex flex-col items-center justify-center space-y-2 pb-8 pt-6 md:space-y-5">
@@ -40,6 +43,7 @@ export default function Home({ posts }) {
                     </div>
                 </div>
             )}
+
             <div className="mt-8">
                 <div
                     className={`transform ${
@@ -48,6 +52,20 @@ export default function Home({ posts }) {
                             : 'transition-transform'
                     }`}
                 >
+                    <div className="mb-6 flex flex-row justify-center space-x-16">
+                        <SearchTypeCard
+                            label="Artiste"
+                            icon="/static/images/icons/artist.png"
+                        />
+                        <SearchTypeCard
+                            label="Oeuvre"
+                            icon="/static/images/icons/mona-lisa.png"
+                        />
+                        <SearchTypeCard
+                            label="Mouvement"
+                            icon="/static/images/icons/abstract.png"
+                        />
+                    </div>
                     <SearchBar onSearch={handleSearch} />
                 </div>
             </div>
