@@ -79,6 +79,10 @@ module.exports = () => {
                     protocol: 'https',
                     hostname: 'ohchouette.com',
                 },
+                {
+                    protocol: 'http',
+                    hostname: 'ohchouette.com',
+                },
             ],
         },
         async headers() {

@@ -31,65 +31,52 @@ export interface SearchResult {
         value: string;
     };
 }
-const Card = ({ title, description, imgSrc, href }) => {
+const Card = ({ title, description, imgSrc, dbPediaLink, href }) => {
     return (
-        <div className="md max-w-[544px] p-4 md:w-1/2">
-            <div
-                className={`${
-                    imgSrc && 'h-full'
-                }  overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60 dark:border-gray-700`}
-            >
-                <div className="p-0">
-                    <ImageWithFallback
-                        src={imgSrc}
-                        alt="foo"
-                        className="aspect-square object-cover object-center"
-                        width={544}
-                        height={306}
-                        fallback={
-                            <Image
-                                src={FALLBACK_IMAGE_URL}
-                                alt="ornythorinque"
-                                className="aspect-square h-full w-full object-cover object-center"
-                            />
-                        }
-                    />
-                </div>
+        <div key={href} className="md max-w-[544px] p-4 md:w-1/2">
+            <Link href={`/artist/${href}`} passHref>
+                <div
+                    className={`${
+                        imgSrc && 'h-full'
+                    }  overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60 dark:border-gray-700`}
+                >
+                    <div className="p-0">
+                        <ImageWithFallback
+                            src={imgSrc}
+                            alt="foo"
+                            className="aspect-square object-cover object-center"
+                            width={544}
+                            height={306}
+                            fallback={
+                                <Image
+                                    src={FALLBACK_IMAGE_URL}
+                                    alt="ornythorinque"
+                                    className="aspect-square h-full w-full object-cover object-center"
+                                />
+                            }
+                        />
+                    </div>
 
-                <div className="p-6">
-                    <h2 className="mb-3 text-2xl font-bold leading-8 tracking-tight">
-                        {href ? (
-                            <Link href={href} aria-label={`Link to ${title}`}>
-                                {title}
-                            </Link>
-                        ) : (
-                            title
-                        )}
-                    </h2>
-                    <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
-                        {href ? (
+                    <div className="p-6">
+                        <h2 className="mb-3 text-2xl font-bold leading-8 tracking-tight">
+                            {title}
+                        </h2>
+                        <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
+                            {description}
+                        </h2>
+
+                        {dbPediaLink && (
                             <Link
-                                href={href}
-                                aria-label={`Link to ${description}`}
+                                href={dbPediaLink}
+                                className="text-base font-medium leading-6 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                                aria-label={`Link to ${title}`}
                             >
-                                {description}
+                                Voir plus &rarr;
                             </Link>
-                        ) : (
-                            description
                         )}
-                    </h2>
-
-                    {href && (
-                        <Link
-                            href={href}
-                            className="text-base font-medium leading-6 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                            aria-label={`Link to ${title}`}
-                        >
-                            Voir plus &rarr;
-                        </Link>
-                    )}
+                    </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 };
