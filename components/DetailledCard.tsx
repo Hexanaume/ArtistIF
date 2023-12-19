@@ -1,84 +1,53 @@
 import React from 'react';
 import Image from './Image';
-// import Link from './Link'
 
 const DetailledCard = ({
     title,
     imgSrc,
     author,
     date,
-    comment,
     era,
     storage,
-    technique,
     price,
+    description,
 }) => (
-    <div className="flex h-full w-full flex-col border-8 border-sky-500">
-        <h2 className="mb-7 mt-7 text-5xl font-semibold leading-8 tracking-tight">
-            {title}
-        </h2>
-        <div className="h-7/8 mb-7 flex w-full flex-row">
-            <div className="h-4/5 w-1/2">
+    <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col">
+        <h2 className="text-5xl font-bold mb-4 p-4">{title}</h2>
+        <div className="flex flex-col md:flex-row mb-4 py-2">
+            <div className="p-4 w-full h-full">
                 <Image
                     alt={title}
                     src={imgSrc}
-                    className="object-cover object-center md:h-36 lg:h-48"
+                    className="object-cover rounded-lg"
                 />
             </div>
-            <div className="ml-7 flex h-4/5 w-1/2 flex-col">
-                <div className="flex w-full flex-row">
-                    <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
-                        Artist :{' '}
-                    </h2>
-                    <h2 className="mb-3 ml-2 text-xl font-medium leading-8 tracking-tight">
-                        {author}
-                    </h2>
+            <div className="md:w-1/2 md:ml-4 flex flex-col p-8 px-2 -mt-2 gap-2">
+                <div className="mb-2 flex">
+                    <span className="text-xl font-bold mr-2">Artist:</span>
+                    <span className="text-lg">{author}</span>
                 </div>
-                <div className="flex w-full flex-row">
-                    <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
-                        Date :{' '}
-                    </h2>
-                    <h2 className="mb-3 ml-2 text-xl font-medium leading-8 tracking-tight">
-                        {date}
-                    </h2>
+                <div className="mb-2 flex">
+                    <span className="text-xl font-bold mr-2">Date:</span>
+                    <span className="text-lg">{date}</span>
                 </div>
-                <div className="flex w-full flex-row">
-                    <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
-                        Art Movement :{' '}
-                    </h2>
-                    <h2 className="mb-3 ml-2 text-xl font-medium leading-8 tracking-tight">
-                        {era}
-                    </h2>
+                <div className="mb-2 flex">
+                    <span className="text-xl font-bold mr-2">Art Movement:</span>
+                    <span className="text-lg">{era}</span>
                 </div>
-                <div className="flex w-full flex-row">
-                    <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
-                        Storage place :{' '}
-                    </h2>
-                    <h2 className="mb-3 ml-2 text-xl font-medium leading-8 tracking-tight">
-                        {storage}
-                    </h2>
+                <div className="mb-2 flex">
+                    <span className="text-xl font-bold mr-2">Storage place:</span>
+                    <span className="text-lg">{storage}</span>
                 </div>
-                <div className="flex w-full flex-row">
-                    <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
-                        Painting Technique :{' '}
-                    </h2>
-                    <h2 className="mb-3 ml-2 text-xl font-medium leading-8 tracking-tight">
-                        {technique}
-                    </h2>
-                </div>
-                <div className="flex w-full flex-row">
-                    <h2 className="mb-3 text-xl  font-medium leading-8 tracking-tight">
-                        Price :{' '}
-                    </h2>
-                    <h2 className="mb-3 ml-2 text-xl font-medium leading-8 tracking-tight">
-                        {price}
-                    </h2>
+                <div className="mb-2 flex">
+                    <span className="text-xl font-bold mr-2">Price:</span>
+                    <span className="text-lg">{price}</span>
                 </div>
             </div>
         </div>
-        <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
-            {comment}
-        </h2>
+        <div>
+            <p className="text-xl font-bold mr-2">Description:</p>
+            <p className="text-lg">{description}</p>
+        </div>
     </div>
 );
 
