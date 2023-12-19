@@ -3,9 +3,10 @@ import SearchButton from '@/components/SearchButton';
 import React, { useState } from 'react';
 import { rechercher } from '../scripts/search.mjs';
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, searchType, setErrorMessage }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+
     const handleChange = (event) => {
         event.preventDefault();
         setSearchTerm(event.target.value);
@@ -14,12 +15,21 @@ const SearchBar = ({ onSearch }) => {
 
     const handleSearch = async (event) => {
         event.preventDefault();
-
+        if (searchType === null) {
+            setErrorMessage('Veuillez choisir un type de recherche');
+            return;
+        } else if (searchTerm === '') {
+            setErrorMessage('Veuillez entrer un nom de recherche');
+            return;
+        } else {
+            setErrorMessage('');
+        }
+        console.log('searchType: ' + searchType);
         console.log('searchTerm: ' + searchTerm);
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
                 searchTerm,
-            )}&type=rechercherArtists`,
+            )}&type=${searchType}`,
         );
         console.log('res: ', res);
 

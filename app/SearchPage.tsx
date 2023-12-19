@@ -9,7 +9,8 @@ const MAX_DISPLAY = 5;
 
 export default function Home() {
     const [searchResults, setSearchResults] = useState([]);
-
+    const [selectedCard, setSelectedCard] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
     const handleSearch = async (results) => {
         setSearchResults(results);
     };
@@ -21,7 +22,13 @@ export default function Home() {
             return text;
         }
     }
-
+    const handleCardSelection = (label) => {
+        console.log('label: ', label);
+        setSelectedCard(label);
+    };
+    const disableOtherCards = () => {
+        // mettre clicked à false pour les autres cartes
+    };
     return (
         <>
             {searchResults.length === 0 && (
@@ -49,17 +56,41 @@ export default function Home() {
                         <SearchTypeCard
                             label="Artiste"
                             icon="/static/images/icons/artist.png"
+                            onSelect={() =>
+                                handleCardSelection('rechercherArtists')
+                            }
+                            cardName="rechercherArtists"
+                            selectedCard={selectedCard}
                         />
                         <SearchTypeCard
                             label="Oeuvre"
                             icon="/static/images/icons/mona-lisa.png"
+                            onSelect={() =>
+                                handleCardSelection('rechercherOeuvres')
+                            }
+                            cardName="rechercherOeuvres"
+                            selectedCard={selectedCard}
                         />
                         <SearchTypeCard
                             label="Mouvement"
                             icon="/static/images/icons/abstract.png"
+                            onSelect={() =>
+                                handleCardSelection('rechercherMouvements')
+                            }
+                            cardName="rechercherMouvements"
+                            selectedCard={selectedCard}
                         />
                     </div>
-                    <SearchBar onSearch={handleSearch} />
+                    <SearchBar
+                        onSearch={handleSearch}
+                        searchType={selectedCard}
+                        setErrorMessage={setErrorMessage}
+                    />
+                    {errorMessage && (
+                        <div className="mt-4 text-red-500 dark:text-red-400">
+                            {errorMessage}
+                        </div>
+                    )}
                 </div>
             </div>
 
