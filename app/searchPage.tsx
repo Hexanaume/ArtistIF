@@ -116,8 +116,7 @@ export default function Home() {
                                     result.abstract.value,
                                     144,
                                 )}
-                                imgSrc={result.picture.value}
-                                dbPediaLink={result.artist.value}
+                                imgSrc={result.picture ? result.picture.value : null}
                                 key={index}
                             />
                         );

@@ -57,7 +57,7 @@ export interface SearchResult {
         value: string;
     };
 }
-const Card = ({ type, wikiID, title, description, imgSrc, dbPediaLink }) => {
+const Card = ({ type, wikiID, title, description, imgSrc }) => {
     return (
         <div className="md max-w-[544px] p-4 md:w-1/2">
             <Link href={`/${type}/${wikiID}`} passHref>
@@ -91,15 +91,6 @@ const Card = ({ type, wikiID, title, description, imgSrc, dbPediaLink }) => {
                             {description}
                         </h2>
 
-                        {dbPediaLink && (
-                            <Link
-                                href={dbPediaLink}
-                                className="text-base font-medium leading-6 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                                aria-label={`Link to ${title}`}
-                            >
-                                Voir plus &rarr;
-                            </Link>
-                        )}
                     </div>
                 </div>
             </Link>

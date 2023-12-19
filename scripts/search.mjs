@@ -10,7 +10,8 @@ function addDbpediaPrefixes(requestString) {
     'PREFIX : <http://dbpedia.org/resource/> \n' +
     'PREFIX dbpedia2: <http://dbpedia.org/property/> \n' +
     'PREFIX dbpedia: <http://dbpedia.org/> \n' +
-    'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n\n';
+    'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n' +
+    'PREFIX dcterms: <http://purl.org/dc/terms/> \n\n';
 
   return prefixes + requestString;
 }
@@ -236,11 +237,8 @@ WHERE {
 
 function requestMouvements(NomMouvements){
   let requestString;
-  requestString = `PREFIX dcterms: <http://purl.org/dc/terms/>
-
-SELECT DISTINCT ?name ?movement ?wikiPageID ?picture ?abstract
+  requestString = `SELECT DISTINCT ?name ?movement ?wikiPageID ?picture ?abstract
 WHERE {
-
   {
    ?e dbo:movement ?artist .
  }
