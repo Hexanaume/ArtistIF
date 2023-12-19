@@ -100,24 +100,33 @@ LIMIT 1
 
 function requestOeuvres(NomOeuvres){
   let requestString;
-  requestString = `SELECT ?wikiPageID ?e ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?artist) (COALESCE(?pic, "UnknownPic") AS ?picture) (GROUP_CONCAT(?movement; separator=",") as ?movements)
+  requestString = `SELECT ?wikiPageID ?artist ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
 WHERE {
-  ?e a dbo:Artwork.
-  ?e dbo:wikiPageID ?wikiPageID
-  OPTIONAL{?e dbp:movement ?movement.}
-  ?e dbo:wikiPageLength ?size.
-  ?e rdfs:label ?name.
-  ?e dbo:abstract ?abstract.
-  OPTIONAL {?e dbo:thumbnail ?pic.}
-  OPTIONAL {?e dbo:author ?author.}
-  
+ ?artist a dbo:Artwork.
+ ?artist dbo:wikiPageID ?wikiPageID
+
+ OPTIONAL{
+{
+?artist dbo:movement ?movement.
+}
+UNION
+ {
+?artist dbp:movement ?movement.
+}
+}
+ ?artist dbo:wikiPageLength ?size.
+ ?artist rdfs:label ?name.
+ ?artist dbo:abstract ?abstract.
+ ?artist dbo:thumbnail ?picture
+ OPTIONAL {?artist dbo:author ?author.}
   FILTER langMatches(lang(?abstract), "en").
-  FILTER langMatches(lang(?name), "en").
+ FILTER langMatches(lang(?name), "en").
+
 
   FILTER regex(?name, "${NomOeuvres}", "i").
 
 }
-GROUP BY ?wikiPageID ?e ?size ?name ?abstract ?pic
+GROUP BY ?wikiPageID ?artist ?size ?name ?abstract ?picture
 LIMIT 30
   `;
   return requestString;
@@ -233,11 +242,11 @@ SELECT DISTINCT ?name ?movement ?wikiPageID ?picture ?abstract
 WHERE {
 
   {
-   ?e dbo:movement ?movement .
+   ?e dbo:movement ?artist .
  }
  UNION
  {
-   ?e dbp:movement ?movement .
+   ?e dbp:movement ?artist .
  }
 
 ?movement dcterms:subject dbc:Art_movements.
@@ -248,7 +257,7 @@ OPTIONAL {?movement dbo:thumbnail ?picture.}
 
 FILTER LANGMATCHES(LANG(?name), "en").
 FILTER LANGMATCHES(LANG(?abstract), "en").
-FILTER regex(?labelMovement, "${NomMouvements}", "i").
+FILTER regex(?name, "${NomMouvements}", "i").
 }
 LIMIT 20
   `;
