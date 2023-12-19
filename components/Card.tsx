@@ -31,6 +31,27 @@ export interface SearchResult {
         type: string;
         value: string;
     };
+    //ajout d'un type
+    year: {
+        type: string;
+        value: string;
+    };
+    price: {
+        type: string;
+        value: string;
+    };
+    date: {
+        type: string;
+        value: string;
+    };
+    era: {
+        type: string;
+        value: string;
+    };
+    storage: {
+        type: string;
+        value: string;
+    };
 }
 const Card = ({ title, description, imgSrc, dbPediaLink, href }) => {
     return (

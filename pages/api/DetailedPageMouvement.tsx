@@ -2,9 +2,9 @@ import SearchButton from '@/components/SearchButton';
 import React, { useState, useEffect } from 'react';
 import { rechercher } from '../scripts/search.mjs';
 import Card, { SearchResult } from '@/components/Card';
-import DetailledCard from '@/components/DetailledCard';
+import DetailledMovement from '@/components/DetailledMovement';
 
-const DetailedPageMouvement = ({ idPage }) => {
+const DetailedPageMovement = ({ idPage }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
@@ -45,16 +45,12 @@ const DetailedPageMouvement = ({ idPage }) => {
                 {searchResults.length > 0 &&
                     searchResults.map((result: SearchResult, index) => {
                         return (
-                            <DetailledCard
-                                title={result.name.value}
-                                imgSrc={result.picture.value}
-                                author={result.name.value}
-                                date={'test'}
-                                comment={result.abstract.value}
-                                era={'test'}
-                                storage={'test'}
-                                technique={'test'}
-                                price={'test'}
+                            <DetailledMovement
+                                key={index} // Ajout de la clé unique ici
+                                name={result.name.value}
+                                picture={result.picture.value}
+                                year={result.year.value}
+                                description={result.abstract.value}
                             />
                         );
                     })}
@@ -63,4 +59,4 @@ const DetailedPageMouvement = ({ idPage }) => {
     );
 };
 
-export default DetailedPage;
+export default DetailedPageMovement;
