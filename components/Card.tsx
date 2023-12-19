@@ -6,6 +6,7 @@ import ImageWithFallback from './ImageWithFallback';
 const FALLBACK_IMAGE_URL =
     'https://ohchouette.com/wp-content/uploads/IMG-50-20022020-08-56-601640-960x960.jpg.webp';
 export interface SearchResult {
+    movements: never;
     artist: {
         type: string;
         value: string;
@@ -30,11 +31,36 @@ export interface SearchResult {
         type: string;
         value: string;
     };
+    wikiPageID: {
+        type: string;
+        value: string;
+    };
+    //ajout d'un type
+    year: {
+        type: string;
+        value: string;
+    };
+    price: {
+        type: string;
+        value: string;
+    };
+    date: {
+        type: string;
+        value: string;
+    };
+    era: {
+        type: string;
+        value: string;
+    };
+    storage: {
+        type: string;
+        value: string;
+    };
 }
-const Card = ({ title, description, imgSrc, dbPediaLink, href }) => {
+const Card = ({ wikiID, title, description, imgSrc, dbPediaLink, href }) => {
     return (
         <div key={href} className="md max-w-[544px] p-4 md:w-1/2">
-            <Link href={`/artist/${href}`} passHref>
+            <Link href={`/artists/${wikiID}`} passHref>
                 <div
                     className={`${
                         imgSrc && 'h-full'

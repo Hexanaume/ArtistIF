@@ -4,6 +4,8 @@ import siteMetadata from '@/data/siteMetadata';
 import Card, { SearchResult } from '@/components/Card';
 import { useState } from 'react';
 import SearchTypeCard from '@/components/SearchTypeCard';
+import { useArtistUrl } from '@/components/UrlContext';
+import { useRouter } from 'next/router';
 
 const MAX_DISPLAY = 5;
 
@@ -99,6 +101,7 @@ export default function Home() {
                     searchResults.map((result: SearchResult, index) => {
                         return (
                             <Card
+                                wikiID={result.wikiPageID.value}
                                 title={result.name.value}
                                 description={truncateText(
                                     result.abstract.value,
