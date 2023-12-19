@@ -2,7 +2,7 @@
 import DetailledArtist from '@/components/DetailledArtist';
 import React from 'react';
 import SearchPage from './SearchPage';
-import DetailedPage from 'pages/api/DetailedPage';
+import DetailedPageA from 'pages/api/DetailedPageA';
 
 const MAX_DISPLAY = 5;
 
@@ -10,7 +10,7 @@ export default function App() {
     return (
         <>
             <SearchPage />
-            <DetailedPage SearchTerm="Leonard" />
+            <DetailedPageA SearchTerm="Leonard" />
         </>
     );
 }

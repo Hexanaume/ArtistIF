@@ -4,7 +4,7 @@ import { rechercher } from '../scripts/search.mjs';
 import Card, { SearchResult } from '@/components/Card';
 import DetailledCard from '@/components/DetailledCard';
 
-const DetailedPage = ({ SearchTerm }) => {
+const DetailedPageO = ({ idPage }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
@@ -16,8 +16,8 @@ const DetailedPage = ({ SearchTerm }) => {
     const handleSearch = async () => {
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
-                SearchTerm,
-            )}`,
+                idPage,
+            )}&type=getInfosOeuvre`,
         );
         console.log('res: ', res);
         const results = await res.json();
@@ -27,7 +27,7 @@ const DetailedPage = ({ SearchTerm }) => {
 
     useEffect(() => {
         handleSearch();
-    }, [SearchTerm]); 
+    }, [idPage]); 
 
     return (
         <>
@@ -48,7 +48,6 @@ const DetailedPage = ({ SearchTerm }) => {
                     searchResults.map((result: SearchResult, index) => {
                         return (
                             <DetailledCard
-
                                 title={result.name.value}
                                 imgSrc={result.picture.value}
                                 author={result.name.value}
@@ -67,4 +66,4 @@ const DetailedPage = ({ SearchTerm }) => {
     );
 };
 
-export default DetailedPage;
+export default DetailedPageO;
