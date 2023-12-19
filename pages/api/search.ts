@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     const type = req.query.type;
     console.log('q', q);
     console.log('type', type);
-    if (type == 'rechercherAtists') {
+    if (type == 'rechercherArtists') {
         try {
             // On recherche les résultats correspondant à la requête de l'utilisateur
 

@@ -106,7 +106,7 @@ export async function rechercher(inputString,type) {
   console.log("requestString",requestString);
 
   const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(requestString) + "&format=json";
-  console.log(url);
+  //console.log(url);
 
   try {
     const response = await fetch(url);
