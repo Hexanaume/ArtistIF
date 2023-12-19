@@ -84,7 +84,9 @@ export async function rechercher(inputString) {
 
   try {
     const response = await fetch(url);
-    return await response.json();
+    const responseJson = await response.json();
+    console.log(responseJson.results.bindings);
+    return responseJson.results.bindings;
   } catch (error) {
     return console.log("Erreur : " + error);
   }
