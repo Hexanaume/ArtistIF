@@ -1,6 +1,5 @@
 import SearchButton from '@/components/SearchButton';
 import React, { useState, useEffect } from 'react';
-import { rechercher } from '../scripts/search.mjs';
 import Card, { SearchResult } from '@/components/Card';
 import DetailledCard from '@/components/DetailledCard';
 import DetailledArtist from '@/components/DetailledArtist';
@@ -28,11 +27,10 @@ const DetailedPageA = ({ idPage }) => {
 
     useEffect(() => {
         handleSearch();
-    }, [idPage]); 
+    }, [idPage]);
 
     return (
         <>
-
             <div className="mt-8">
                 <div
                     className={`transform ${
@@ -40,8 +38,7 @@ const DetailedPageA = ({ idPage }) => {
                             ? '-translate-y-10 transition-transform'
                             : 'transition-transform'
                     }`}
-                >
-                </div>
+                ></div>
             </div>
 
             <div className="flex flex-row flex-wrap">
@@ -49,11 +46,12 @@ const DetailedPageA = ({ idPage }) => {
                     searchResults.map((result: SearchResult, index) => {
                         return (
                             <DetailledArtist
+                                key={index}
                                 name={result.name.value}
                                 picture={result.picture.value}
                                 movement={result.movements.value}
                                 description={result.abstract.value}
-                                artworks={"test"}
+                                artworks={'test'}
                             />
                         );
                     })}

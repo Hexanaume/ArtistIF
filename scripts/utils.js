@@ -11,6 +11,7 @@ export const buildFullArtistJson = (
         wikiPageID: artist.wikiPageID.value,
         name: artist.label.value,
         abstract: artist.abstract.value,
+        thumbnail_url: artist.thumbnail.value,
     };
 
     // parse the movementsResult to get the movements

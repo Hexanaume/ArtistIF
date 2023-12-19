@@ -4,10 +4,24 @@
 import DetailledArtist from '@/components/DetailledArtist';
 import React, { useEffect, useState } from 'react';
 
+type ArtistDetailsProps = {
+    name: string;
+    abstract: string;
+    thumbnail_url: string;
+    movements: Array<{ label: string; wikiPageID: string }>;
+    oeuvres: Array<{
+        wikiPageID: string;
+        name: string;
+        abstract: string;
+        thumbnail_url: string;
+    }>;
+};
+
 export default function ArtistDetails({ params }) {
     console.log(params);
 
-    const [artistDetails, setArtistDetails] = useState(null);
+    const [artistDetails, setArtistDetails] =
+        useState<ArtistDetailsProps | null>(null);
 
     const getArtistDetails = async (artistId: string) => {
         const res = await fetch(
@@ -16,6 +30,7 @@ export default function ArtistDetails({ params }) {
             )}&type=getInfosArtist`,
         );
         const artistDetails = await res.json();
+        console.log(artistDetails);
         setArtistDetails(artistDetails);
     };
 
@@ -25,12 +40,15 @@ export default function ArtistDetails({ params }) {
 
     return (
         <>
-            <DetailledArtist
-                name={artistDetails?.name}
-                description={artistDetails?.abstract}
-                picture={artistDetails?.thumbnail_url}
-                movement={}
-            />
+            {artistDetails && (
+                <DetailledArtist
+                    name={artistDetails.name}
+                    description={artistDetails.abstract}
+                    picture={artistDetails.thumbnail_url}
+                    movement={artistDetails.movements[0].label}
+                    artworks={artistDetails.oeuvres[0].name}
+                />
+            )}
         </>
     );
 }
