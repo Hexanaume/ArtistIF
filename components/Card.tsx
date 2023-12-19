@@ -37,7 +37,7 @@ export interface SearchResult {
 const Card = ({ title, description, imgSrc, dbPediaLink, href }) => {
     return (
         <div key={href} className="md max-w-[544px] p-4 md:w-1/2">
-            <Link href={`/artistDetails`} passHref>
+            <Link href={`/artists/${href}`} passHref>
                 <div
                     className={`${
                         imgSrc && 'h-full'
