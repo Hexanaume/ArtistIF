@@ -45,8 +45,8 @@ export default function ArtistDetails({ params }) {
                     name={artistDetails.name}
                     description={artistDetails.abstract}
                     picture={artistDetails.thumbnail_url}
-                    movement={artistDetails.movements[0].label}
-                    artworks={artistDetails.oeuvres[0].name}
+                    movements={artistDetails.movements}
+                    artworks={artistDetails.oeuvres}
                 />
             )}
         </>
