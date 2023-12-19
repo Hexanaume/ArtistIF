@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { rechercher } from '../scripts/search.mjs';
 import Card, { SearchResult } from '@/components/Card';
 import DetailledCard from '@/components/DetailledCard';
+import DetailledArtist from '@/components/DetailledArtist';
 
 const DetailedPageA = ({ idPage }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +18,7 @@ const DetailedPageA = ({ idPage }) => {
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
                 idPage,
-            )}`,
+            )}&type=rechercherArtists`,
         );
         console.log('res: ', res);
         const results = await res.json();
@@ -47,17 +48,12 @@ const DetailedPageA = ({ idPage }) => {
                 {searchResults.length > 0 &&
                     searchResults.map((result: SearchResult, index) => {
                         return (
-                            <DetailledCard
-                                title={result.name.value}
-                                imgSrc={result.picture.value}
-                                author={result.name.value}
-                                date={"test"}
-                                comment={result.abstract.value}
-                                era={"test"}
-                                storage={"test"}
-                                technique={"test"}
-                                price={"test"}
-
+                            <DetailledArtist
+                                name={result.name.value}
+                                picture={result.picture.value}
+                                movement={result.movements.value}
+                                description={result.abstract.value}
+                                artworks={"test"}
                             />
                         );
                     })}

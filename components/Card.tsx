@@ -6,6 +6,7 @@ import ImageWithFallback from './ImageWithFallback';
 const FALLBACK_IMAGE_URL =
     'https://ohchouette.com/wp-content/uploads/IMG-50-20022020-08-56-601640-960x960.jpg.webp';
 export interface SearchResult {
+    movements: any;
     artist: {
         type: string;
         value: string;
