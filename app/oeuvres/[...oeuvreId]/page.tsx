@@ -4,23 +4,23 @@ import DetailledArt from '@/components/DetailledArt';
 
 import DetailledArtist from '@/components/DetailledArtist';
 import React, { useEffect, useState } from 'react';
+import DetailedArt from '@/components/DetailledArt';
 
 type ArtDetailsProps = {
     movements: Array<{ label: string; wikiPageID: string }>;
-    artist: any;
-    abstract: any;
-    name: any;
-    imgSrc:string;
-    date:string;
-    location:string;
-    price:string; 
+    artist: never;
+    abstract: string;
+    name: string;
+    imgSrc: string;
+    date: string;
+    location: string;
+    price: string;
 };
 
 export default function ArtDetails({ params }) {
     console.log(params);
 
-    const [artDetails, setArtDetails] =
-        useState<ArtDetailsProps | null>(null);
+    const [artDetails, setArtDetails] = useState<ArtDetailsProps | null>(null);
     const getArtDetails = async (artId: string) => {
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
@@ -28,7 +28,6 @@ export default function ArtDetails({ params }) {
             )}&type=getInfosOeuvre`,
         );
         const artDetails = await res.json();
-        console.log(artDetails);
         setArtDetails(artDetails);
     };
 
@@ -39,16 +38,16 @@ export default function ArtDetails({ params }) {
     return (
         <>
             {artDetails && (
-                <DetailledArt 
-                    name={artDetails.name} 
-                    imgSrc={artDetails.imgSrc} 
-                    author={artDetails.artist} 
-                    date={artDetails.date} 
-                    movement={artDetails.movements} 
-                    location={artDetails.location} 
+                <DetailedArt
+                    name={artDetails.name}
+                    imgSrc={artDetails.imgSrc}
+                    author={artDetails.artist}
+                    date={artDetails.date}
+                    movement={artDetails.movements}
+                    location={artDetails.location}
                     price={artDetails.price}
                     description={artDetails.abstract}
-                    />
+                />
             )}
         </>
     );
