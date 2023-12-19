@@ -2,11 +2,10 @@
 
 import { useState } from 'react';
 
-const SearchTypeCard = ({ label, icon }, { selected }) => {
+const SearchTypeCard = ({ label, icon, onSelect, cardName, selectedCard }) => {
     // handle the hover of the card
     // if hovered, change the border color to blue
     const [hovered, setHovered] = useState(false);
-    const [isClicked, setIsClicked] = useState(false);
 
     const handleMouseEnter = () => {
         setHovered(true);
@@ -17,7 +16,7 @@ const SearchTypeCard = ({ label, icon }, { selected }) => {
     };
 
     const handleClick = () => {
-        setIsClicked(!isClicked);
+        onSelect(); // Envoie le label de la carte sélectionnée
     };
 
     return (
@@ -29,8 +28,8 @@ const SearchTypeCard = ({ label, icon }, { selected }) => {
                 }
                 style={{
                     width: '300px',
-                    borderColor: isClicked ? '#db2777' : '',
-                    scale: isClicked ? '1.02' : '1',
+                    borderColor: cardName === selectedCard ? '#db2777' : '',
+                    scale: cardName === selectedCard ? '1.02' : '1',
                     transition: 'all 0.15s ease-in-out',
                 }}
                 onMouseEnter={handleMouseEnter}

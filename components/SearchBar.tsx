@@ -3,9 +3,10 @@ import SearchButton from '@/components/SearchButton';
 import React, { useState } from 'react';
 import { rechercher } from '../scripts/search.mjs';
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, searchType, setErrorMessage }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+
     const handleChange = (event) => {
         event.preventDefault();
         setSearchTerm(event.target.value);
@@ -14,17 +15,26 @@ const SearchBar = ({ onSearch }) => {
 
     const handleSearch = async (event) => {
         event.preventDefault();
-
-        //console.log('searchTerm: ' + searchTerm);
+        if (searchType === null) {
+            setErrorMessage('Veuillez choisir un type de recherche');
+            return;
+        } else if (searchTerm === '') {
+            setErrorMessage('Veuillez entrer un nom de recherche');
+            return;
+        } else {
+            setErrorMessage('');
+        }
+        console.log('searchType: ' + searchType);
+        console.log('searchTerm: ' + searchTerm);
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
                 searchTerm,
-            )}&type=rechercherArtists`,
+            )}&type=${searchType}`,
         );
         console.log('res: ', res);
 
         const results = await res.json();
-        //console.log('results: ', results);
+        console.log('results: ', results);
         setSearchResults(results);
         onSearch(results);
     };
@@ -62,7 +72,7 @@ const SearchBar = ({ onSearch }) => {
                             type="search"
                             id="default-search"
                             className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 ps-10 text-sm text-gray-900 focus:border-gray-700 focus:ring-gray-800 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-gray-400 dark:focus:ring-gray-400"
-                            placeholder="Search Mockups, Logos..."
+                            placeholder="Search artists, artworks, movements"
                             required
                         />
                         <button
