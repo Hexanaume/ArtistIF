@@ -1,6 +1,7 @@
 import React from 'react';
 import Image, { FALLBACK_IMAGE_URL } from './Image';
 import ImageWithFallback from '@/components/ImageWithFallback';
+import Card from '@/components/Card';
 
 export default function DetailledCard({
     name,
@@ -65,9 +66,13 @@ export default function DetailledCard({
                 <div className={'flex flex-row flex-wrap'}>
                     {artworks.map((artwork, index) => {
                         return (
-                            <span key={index} className="mr-2 text-lg">
-                                {`${artwork.name},`}
-                            </span>
+                            <Card
+                                type={'oeuvre'}
+                                wikiID={artwork.wikiPageID}
+                                title={artwork.name}
+                                description={artwork.abstract}
+                                imgSrc={artwork.thumbnail_url}
+                            />
                         );
                     })}
                 </div>
