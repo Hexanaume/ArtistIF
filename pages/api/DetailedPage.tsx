@@ -4,7 +4,7 @@ import { rechercher } from '../scripts/search.mjs';
 import Card, { SearchResult } from '@/components/Card';
 import DetailledCard from '@/components/DetailledCard';
 
-const DetailedPage = () => {
+const DetailedPage = ({ SearchTerm }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
@@ -16,7 +16,7 @@ const DetailedPage = () => {
     const handleSearch = async () => {
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
-                "Leonard",
+                SearchTerm,
             )}`,
         );
         console.log('res: ', res);
@@ -27,7 +27,7 @@ const DetailedPage = () => {
 
     useEffect(() => {
         handleSearch();
-    }, []);
+    }, [SearchTerm]); 
 
     return (
         <>
