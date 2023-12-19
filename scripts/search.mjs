@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+
 function addDbpediaPrefixes(requestString) {
   // append the prefixes to the request string
   const prefixes = 'PREFIX owl: <http://www.w3.org/2002/07/owl#> \n' +
@@ -53,20 +55,61 @@ function requestArtists(NomArtists){
   return requestString;
 }
 
-export async function rechercher(inputString) {
+
+function requestInfosArtists(urlArtist){
+  let requestString;
+  requestString = `SELECT distinct ?artist ?label ?abstract  WHERE {
+
+    ?artist dbo:wikiPageLength ?pageLength .
+    ?artist a dbo:Artist.
+    ?artist rdfs:label ?label .
+    ?artist dbo:abstract ?abstract .
+    filter contains(?artist,"${urlArtist}").
+  
+  } ORDER BY desc(?pageLength)`;
+
+  return requestString;
+}
+
+function requestOeuvres(NomOeuvres){
+  let requestString;
+  requestString = "à faire ";
+  return requestString;
+}
+function getInfosOeuvre(idOeuvre){
+  let requestString;
+  requestString = "à faire ";
+  return requestString;
+}
+function requestMouvements(NomMouvements){
+  let requestString;
+  requestString = "à faire ";
+  return requestString;
+}
+function getInfosMouvement(idMouvement){
+  let requestString;
+  requestString = "à faire ";
+  return requestString;
+}
+export async function rechercher(inputString,type) {
 
   // Ajout des préfixes
   let requestString;
-  requestString = addDbpediaPrefixes(requestArtists(inputString));
+  if(type === "artist"){
+    requestString = addDbpediaPrefixes(requestArtists(inputString));
+  }else if(type === "oeuvre"){
+  requestString = addDbpediaPrefixes(requestOeuvres(inputString));
+  }else if(type === "mouvement"){
+    requestString = addDbpediaPrefixes(requestMouvements(inputString));
+  }
 
   console.log("requestString",requestString);
 
   const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(requestString) + "&format=json";
-
+  //console.log(url);
 
   try {
     const response = await fetch(url);
-
     const responseJson = await response.json();
     console.log(responseJson.results.bindings);
     return responseJson.results.bindings;
@@ -75,5 +118,27 @@ export async function rechercher(inputString) {
   }
 
 }
+export async function getInfos(urlArtist,type){
+  // Ajout des préfixes
+  let requestString;
+  if(type === "artist"){
+    requestString = addDbpediaPrefixes(requestInfosArtists(urlArtist));
+  }else if(type === "oeuvre"){
+    requestString = addDbpediaPrefixes(requestOeuvres(urlArtist));
+  } else if(type === "mouvement"){
+    requestString = addDbpediaPrefixes(requestMouvements(urlArtist));
+  }
 
-// Affichage des résultats dans un tableau
+  console.log("requestString",requestString);
+
+  const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(requestString) + "&format=json";
+  console.log(url);
+
+  try {
+    const response = await fetch(url);
+    return await response.json();
+  } catch (error) {
+    return console.log("Erreur : " + error);
+  }
+
+}
