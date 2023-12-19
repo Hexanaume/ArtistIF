@@ -6,14 +6,14 @@ import DetailledArtist from '@/components/DetailledArtist';
 import React, { useEffect, useState } from 'react';
 
 type ArtDetailsProps = {
-    movements: Array<{ label: string; wikiPageID: string }>;
-    artist: any;
-    abstract: any;
-    name: any;
-    imgSrc:string;
-    date:string;
-    location:string;
-    price:string; 
+    wikiPageID: string;
+    labelArtist: string;
+    abstract: string;
+    labelMovement: string;
+    thumbnail: string;
+    completionDate: string;
+    locationLabel: string;
+    price: string;
 };
 
 export default function ArtDetails({ params }) {
@@ -27,6 +27,7 @@ export default function ArtDetails({ params }) {
                 artId,
             )}&type=getInfosOeuvre`,
         );
+        console.log(res);
         const artDetails = await res.json();
         console.log(artDetails);
         setArtDetails(artDetails);
@@ -40,15 +41,15 @@ export default function ArtDetails({ params }) {
         <>
             {artDetails && (
                 <DetailledArt 
-                    name={artDetails.name} 
-                    imgSrc={artDetails.imgSrc} 
-                    author={artDetails.artist} 
-                    date={artDetails.date} 
-                    movement={artDetails.movements} 
-                    location={artDetails.location} 
-                    price={artDetails.price}
+                    name={artDetails.wikiPageID} 
+                    author={artDetails.labelArtist} 
                     description={artDetails.abstract}
-                    />
+                    movement={artDetails.labelMovement} 
+                    imgSrc={artDetails.thumbnail} 
+                    date={artDetails.completionDate} 
+                    location={artDetails.locationLabel} 
+                    price={artDetails.price}
+                />
             )}
         </>
     );

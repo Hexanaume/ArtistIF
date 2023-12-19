@@ -134,9 +134,8 @@ LIMIT 30
 }
 
 function getInfosOeuvre(idOeuvre){
-  console.log("idOeuvre",idOeuvre);
   let requestString;
-  requestString = `SELECT DISTINCT ?wikiPageID ?labelArtist ?abstract ?labelMovement ?thumbnail ?completionDate ?locationLabel ?location ?price
+  requestString = `SELECT DISTINCT ?wikiPageID ?labelArtist ?abstract ?labelMovement ?thumbnail ?completionDate ?locationLabel ?price
 WHERE {
  ?artwork a dbo:Artwork .
  ?artwork dbo:wikiPageID ?wikiPageID .
