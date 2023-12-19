@@ -17,6 +17,7 @@ export default async function handler(req, res) {
     } else if (type == 'getInfosArtist') {
         try {
             const results = await getInfos(q, 'artist');
+            // On renvoie les résultats
             res.status(200).json(results);
         } catch (e) { 
             res.status(500).json({ error: e.message });

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const SearchTypeCard = ({ label, icon, onSelect, cardName, selectedCard }) => {
+const SearchTypeCard = ({ type, label, icon, onSelect, cardName, selectedCard, selectedCardType }) => {
     // handle the hover of the card
     // if hovered, change the border color to blue
     const [hovered, setHovered] = useState(false);

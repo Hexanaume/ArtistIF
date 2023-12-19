@@ -10,7 +10,8 @@ function addDbpediaPrefixes(requestString) {
     'PREFIX : <http://dbpedia.org/resource/> \n' +
     'PREFIX dbpedia2: <http://dbpedia.org/property/> \n' +
     'PREFIX dbpedia: <http://dbpedia.org/> \n' +
-    'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n\n';
+    'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n' +
+    'PREFIX dcterms: <http://purl.org/dc/terms/> \n\n';
 
   return prefixes + requestString;
 }
@@ -100,34 +101,33 @@ LIMIT 1
 
 function requestOeuvres(NomOeuvres){
   let requestString;
-  requestString = `SELECT ?id ?e ?size ?name ?desc (GROUP_CONCAT(?author; separator=",") as ?authors) (COALESCE(?pic, "UnknownPic") AS ?image) (GROUP_CONCAT(?movement; separator=",") as ?movements)
+  requestString = `SELECT ?wikiPageID ?artist ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
 WHERE {
- ?e a dbo:Artwork.
- ?e dbo:wikiPageID ?id
+ ?artist a dbo:Artwork.
+ ?artist dbo:wikiPageID ?wikiPageID
 
  OPTIONAL{
 {
-?e dbo:movement ?movement.
+?artist dbo:movement ?movement.
 }
 UNION
  {
-?e dbp:movement ?movement.
+?artist dbp:movement ?movement.
 }
 }
- ?e dbo:wikiPageLength ?size.
- ?e rdfs:label ?name.
- ?e dbo:abstract ?desc.
- OPTIONAL {?e dbo:thumbnail ?pic.}
- OPTIONAL {?e dbo:author ?author.}
-  FILTER langMatches(lang(?desc), "en").
+ ?artist dbo:wikiPageLength ?size.
+ ?artist rdfs:label ?name.
+ ?artist dbo:abstract ?abstract.
+ ?artist dbo:thumbnail ?picture
+ OPTIONAL {?artist dbo:author ?author.}
+  FILTER langMatches(lang(?abstract), "en").
  FILTER langMatches(lang(?name), "en").
 
 
- FILTER regex(?name, "${NomOeuvres}", "i").
-
+  FILTER regex(?name, "${NomOeuvres}", "i").
 
 }
-GROUP BY ?id ?e ?size ?name ?desc ?pic
+GROUP BY ?wikiPageID ?artist ?size ?name ?abstract ?picture
 LIMIT 30
   `;
   return requestString;
@@ -237,28 +237,25 @@ WHERE {
 
 function requestMouvements(NomMouvements){
   let requestString;
-  requestString = `PREFIX dcterms: <http://purl.org/dc/terms/>
-
-SELECT DISTINCT ?labelMovement ?movement ?id ?pic ?desc
+  requestString = `SELECT DISTINCT ?name ?movement ?wikiPageID ?picture ?abstract
 WHERE {
-
   {
-   ?e dbo:movement ?movement .
+   ?e dbo:movement ?artist .
  }
  UNION
  {
-   ?e dbp:movement ?movement .
+   ?e dbp:movement ?artist .
  }
 
 ?movement dcterms:subject dbc:Art_movements.
-?movement rdfs:label ?labelMovement .
-?movement dbo:wikiPageID ?id.
-?movement dbo:abstract ?desc.
-OPTIONAL {?movement dbo:thumbnail ?pic.}
+?movement rdfs:label ?name .
+?movement dbo:wikiPageID ?wikiPageID.
+?movement dbo:abstract ?abstract.
+OPTIONAL {?movement dbo:thumbnail ?picture.}
 
-FILTER LANGMATCHES(LANG(?labelMovement), "en").
-FILTER LANGMATCHES(LANG(?desc), "en").
-FILTER regex(?labelMovement, "${NomMouvements}", "i").
+FILTER LANGMATCHES(LANG(?name), "en").
+FILTER LANGMATCHES(LANG(?abstract), "en").
+FILTER regex(?name, "${NomMouvements}", "i").
 }
 LIMIT 20
   `;

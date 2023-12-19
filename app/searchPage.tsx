@@ -12,6 +12,7 @@ const MAX_DISPLAY = 5;
 export default function Home() {
     const [searchResults, setSearchResults] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
+    const [selectedCardType, setSelectedCardType] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const handleSearch = async (results) => {
         setSearchResults(results);
@@ -24,9 +25,10 @@ export default function Home() {
             return text;
         }
     }
-    const handleCardSelection = (label) => {
-        console.log('label: ', label);
+    const handleCardSelection = (label, type) => {
+        console.log('label: '+ label,'type: '+ type);
         setSelectedCard(label);
+        setSelectedCardType(type);
     };
     const disableOtherCards = () => {
         // mettre clicked à false pour les autres cartes
@@ -56,31 +58,37 @@ export default function Home() {
                 >
                     <div className="mb-6 flex flex-row justify-center space-x-16">
                         <SearchTypeCard
+                            type="artists"
                             label="Artist"
                             icon="/static/images/icons/artist.png"
                             onSelect={() =>
-                                handleCardSelection('rechercherArtists')
+                                handleCardSelection('rechercherArtists', 'artists')
                             }
                             cardName="rechercherArtists"
                             selectedCard={selectedCard}
+                            selectedCardType={selectedCardType}
                         />
                         <SearchTypeCard
+                            type="mouvement"
                             label="Artwork"
                             icon="/static/images/icons/mona-lisa.png"
                             onSelect={() =>
-                                handleCardSelection('rechercherOeuvres')
+                                handleCardSelection('rechercherOeuvres', 'mouvement')
                             }
                             cardName="rechercherOeuvres"
                             selectedCard={selectedCard}
+                            selectedCardType={selectedCardType}
                         />
                         <SearchTypeCard
+                            type="oeuvres"
                             label="Movement"
                             icon="/static/images/icons/abstract.png"
                             onSelect={() =>
-                                handleCardSelection('rechercherMouvements')
+                                handleCardSelection('rechercherMouvements', 'oeuvres')
                             }
                             cardName="rechercherMouvements"
                             selectedCard={selectedCard}
+                            selectedCardType={selectedCardType}
                         />
                     </div>
                     <SearchBar
@@ -101,15 +109,14 @@ export default function Home() {
                     searchResults.map((result: SearchResult, index) => {
                         return (
                             <Card
+                                type={selectedCardType}
                                 wikiID={result.wikiPageID.value}
                                 title={result.name.value}
                                 description={truncateText(
                                     result.abstract.value,
                                     144,
                                 )}
-                                imgSrc={result.picture.value}
-                                dbPediaLink={result.artist.value}
-                                href={result.artist.value}
+                                imgSrc={result.picture ? result.picture.value : null}
                                 key={index}
                             />
                         );

@@ -28,9 +28,10 @@ export const buildFullArtistJson = (
             wikiPageID: oeuvre.wikiPageID.value,
             name: oeuvre.artworkLabel.value,
             abstract: oeuvre.abstract.value,
-            thumbnail_url: oeuvre.thumbnail.value,
+            thumbnail_url: !oeuvre.thumbnail ? null : oeuvre.thumbnail.value,
         };
     });
+
 
     artistJson.movements = movements;
     artistJson.oeuvres = oeuvresJson;
