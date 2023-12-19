@@ -2,21 +2,21 @@ import React from 'react';
 import Image from './Image';
 
 const DetailledCard = ({
-    title,
+    name,
     imgSrc,
     author,
     date,
-    era,
-    storage,
+    movement,
+    location,
     price,
     description,
 }) => (
     <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col">
-        <h2 className="text-5xl font-bold mb-4 p-4">{title}</h2>
+        <h2 className="text-5xl font-bold mb-4 p-4">{name}</h2>
         <div className="flex flex-col md:flex-row mb-4 py-2">
             <div className="p-4 w-full h-full">
                 <Image
-                    alt={title}
+                    alt={name}
                     src={imgSrc}
                     className="object-cover rounded-lg"
                 />
@@ -32,11 +32,11 @@ const DetailledCard = ({
                 </div>
                 <div className="mb-2 flex">
                     <span className="text-xl font-bold mr-2">Art Movement:</span>
-                    <span className="text-lg">{era}</span>
+                    <span className="text-lg">{movement}</span>
                 </div>
                 <div className="mb-2 flex">
                     <span className="text-xl font-bold mr-2">Storage place:</span>
-                    <span className="text-lg">{storage}</span>
+                    <span className="text-lg">{location}</span>
                 </div>
                 <div className="mb-2 flex">
                     <span className="text-xl font-bold mr-2">Price:</span>
