@@ -1,6 +1,9 @@
 import Image from './Image';
 import Link from './Link';
 import ImageWithFallback from './ImageWithFallback';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useArtistUrl } from '@/components/UrlContext';
 //test
 
 const FALLBACK_IMAGE_URL =
@@ -34,7 +37,7 @@ export interface SearchResult {
 const Card = ({ title, description, imgSrc, dbPediaLink, href }) => {
     return (
         <div key={href} className="md max-w-[544px] p-4 md:w-1/2">
-            <Link href={`/artist/${href}`} passHref>
+            <Link href={`/artistDetails`} passHref>
                 <div
                     className={`${
                         imgSrc && 'h-full'
