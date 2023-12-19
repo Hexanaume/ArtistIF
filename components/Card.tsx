@@ -1,14 +1,12 @@
 import Image from './Image';
 import Link from './Link';
 import ImageWithFallback from './ImageWithFallback';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useArtistUrl } from '@/components/UrlContext';
 //test
 
 const FALLBACK_IMAGE_URL =
     'https://ohchouette.com/wp-content/uploads/IMG-50-20022020-08-56-601640-960x960.jpg.webp';
 export interface SearchResult {
+    movements: any;
     artist: {
         type: string;
         value: string;
@@ -34,6 +32,27 @@ export interface SearchResult {
         value: string;
     };
     wikiPageID: {
+        type: string;
+        value: string;
+    };
+    //ajout d'un type
+    year: {
+        type: string;
+        value: string;
+    };
+    price: {
+        type: string;
+        value: string;
+    };
+    date: {
+        type: string;
+        value: string;
+    };
+    era: {
+        type: string;
+        value: string;
+    };
+    storage: {
         type: string;
         value: string;
     };
