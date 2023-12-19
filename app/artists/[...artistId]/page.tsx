@@ -16,17 +16,21 @@ export default function ArtistDetails({ params }) {
             )}&type=getInfosArtist`,
         );
         const artistDetails = await res.json();
-
         setArtistDetails(artistDetails);
     };
 
     useEffect(() => {
-        getArtistDetails(params.artistId).then((r) => console.log(r));
+        getArtistDetails(params.artistId);
     }, []);
 
     return (
         <>
-            <div>ouai</div>
+            <DetailledArtist
+                name={artistDetails?.name}
+                description={artistDetails?.abstract}
+                picture={artistDetails?.thumbnail_url}
+                movement={}
+            />
         </>
     );
 }

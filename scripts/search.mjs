@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-
+import {buildFullArtistJson} from "./utils.js";
 function addDbpediaPrefixes(requestString) {
   // append the prefixes to the request string
   const prefixes = 'PREFIX owl: <http://www.w3.org/2002/07/owl#> \n' +
@@ -58,7 +57,10 @@ function requestArtists(NomArtists){
 }
 
 
-function requestInfosArtists(idArtist){
+function requestInfosArtists(idArtist)
+// gets the information about an artist from its id
+// useful for the artist page
+{
   let requestString;
   requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract 
 WHERE {
@@ -401,18 +403,16 @@ export async function getInfos(id,type){
       const resInfos = await callAPI(addDbpediaPrefixes(requestInfosArtists(id)));
       const resOeuvres = await callAPI(addDbpediaPrefixes(requestOeuvresArtiste(id)));
       const resMouvements = await callAPI(addDbpediaPrefixes(requestMouvementsArtiste(id)));
-      const res = Object.assign({}, resInfos, resOeuvres, resMouvements);
-      console.log("res artist infos : ",res);
-      return res;
+
+      // add the artist info to the artist object
+      return buildFullArtistJson(resInfos, resMouvements, resOeuvres);
     } catch (error) {
       return console.log("Erreur : " + error);
     }
 
   }else if(type === "oeuvre"){
     try {
-      const resInfos = await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
-      console.log("resInfos oeuvre : ",resInfos);
-      return resInfos;
+      return await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
     } catch (error) {
       return console.log("Erreur : " + error);
     }
@@ -421,9 +421,7 @@ export async function getInfos(id,type){
       const resInfos = await callAPI(addDbpediaPrefixes(getInfosMouvement(id)));
       const resArtistes = await callAPI(addDbpediaPrefixes(getArtistesMouvement(id)));
       const resOeuvres = await callAPI(addDbpediaPrefixes(getOeuvresMouvement(id)));
-      const res = Object.assign({}, resInfos, resArtistes, resOeuvres);
-      console.log("res mouvement infos : ",res);
-      return res;
+      return Object.assign({}, resInfos, resArtistes, resOeuvres);
     } catch (error) {
       return console.log("Erreur : " + error);
     }
@@ -434,7 +432,6 @@ export async function getInfos(id,type){
 
 async function callAPI(requestString) {
   const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(requestString) + "&format=json";
-  console.log(url);
 
   try {
     const response = await fetch(url);
