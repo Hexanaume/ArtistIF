@@ -19,7 +19,7 @@ export default async function handler(req, res) {
         try {
             // On recherche les résultats correspondant à la requête de l'utilisateur
 
-            const results = await getInfos(q, 'artist');
+            const results = await getInfos(q, 'artistId');
             // On renvoie les résultats
             res.status(200).json(results);
         } catch (e) {
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         try {
             // On recherche les résultats correspondant à la requête de l'utilisateur
 
-            const results = await getInfos(q, 'oeuvre');
+            const results = await getInfos(q, 'oeuvreId');
             // On renvoie les résultats
             res.status(200).json(results);
         } catch (e) {
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
         try {
             // On recherche les résultats correspondant à la requête de l'utilisateur
 
-            const results = await getInfos(q, 'mouvement');
+            const results = await getInfos(q, 'mouvementId');
             // On renvoie les résultats
             res.status(200).json(results);
         } catch (e) {
