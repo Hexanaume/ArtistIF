@@ -17,7 +17,7 @@ type ArtistDetailsProps = {
     }>;
 };
 
-export default function ArtistDetails({ params } : { params: any}) {
+export default function ArtistDetails({ params }) {
     console.log(params);
 
     const [artistDetails, setArtistDetails] =
