@@ -3,7 +3,7 @@ const siteMetadata = {
     title: 'ArtistIF',
     author: 'Hexanome 4123',
     //headerTitle: 'ArtistIF',
-    description: 'Ornythorinques',
+    description: 'A website for artistic souls !',
     language: 'en-us',
     theme: 'system', // system, dark or light
     siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',

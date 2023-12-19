@@ -47,15 +47,15 @@ export default function Home() {
                 >
                     <div className="mb-6 flex flex-row justify-center space-x-16">
                         <SearchTypeCard
-                            label="Artiste"
+                            label="Artist"
                             icon="/static/images/icons/artist.png"
                         />
                         <SearchTypeCard
-                            label="Oeuvre"
+                            label="Artwork"
                             icon="/static/images/icons/mona-lisa.png"
                         />
                         <SearchTypeCard
-                            label="Mouvement"
+                            label="Movement"
                             icon="/static/images/icons/abstract.png"
                         />
                     </div>
