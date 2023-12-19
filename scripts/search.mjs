@@ -134,6 +134,7 @@ LIMIT 30
 }
 
 function getInfosOeuvre(idOeuvre){
+  console.log("idOeuvre",idOeuvre);
   let requestString;
   requestString = `SELECT DISTINCT ?wikiPageID ?labelArtist ?abstract ?labelMovement ?thumbnail ?completionDate ?locationLabel ?location ?price
 WHERE {
@@ -233,7 +234,6 @@ WHERE {
   `;
   return requestString;
 }
-
 
 function requestMouvements(NomMouvements){
   let requestString;
@@ -410,6 +410,7 @@ export async function getInfos(id,type){
 
   }else if(type === "oeuvre"){
     try {
+      console.log("id",id);
       return await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
     } catch (error) {
       return console.log("Erreur : " + error);
