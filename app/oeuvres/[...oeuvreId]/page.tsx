@@ -33,7 +33,7 @@ export default function ArtDetails({ params }) {
     };
 
     useEffect(() => {
-        getArtDetails(params.artistId);
+        getArtDetails(params.oeuvreId);
     }, []);
 
     return (
