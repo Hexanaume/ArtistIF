@@ -100,34 +100,24 @@ LIMIT 1
 
 function requestOeuvres(NomOeuvres){
   let requestString;
-  requestString = `SELECT ?id ?e ?size ?name ?desc (GROUP_CONCAT(?author; separator=",") as ?authors) (COALESCE(?pic, "UnknownPic") AS ?image) (GROUP_CONCAT(?movement; separator=",") as ?movements)
+  requestString = `SELECT ?wikiPageID ?e ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?artist) (COALESCE(?pic, "UnknownPic") AS ?picture) (GROUP_CONCAT(?movement; separator=",") as ?movements)
 WHERE {
- ?e a dbo:Artwork.
- ?e dbo:wikiPageID ?id
+  ?e a dbo:Artwork.
+  ?e dbo:wikiPageID ?wikiPageID
+  OPTIONAL{?e dbp:movement ?movement.}
+  ?e dbo:wikiPageLength ?size.
+  ?e rdfs:label ?name.
+  ?e dbo:abstract ?abstract.
+  OPTIONAL {?e dbo:thumbnail ?pic.}
+  OPTIONAL {?e dbo:author ?author.}
+  
+  FILTER langMatches(lang(?abstract), "en").
+  FILTER langMatches(lang(?name), "en").
 
- OPTIONAL{
-{
-?e dbo:movement ?movement.
-}
-UNION
- {
-?e dbp:movement ?movement.
-}
-}
- ?e dbo:wikiPageLength ?size.
- ?e rdfs:label ?name.
- ?e dbo:abstract ?desc.
- OPTIONAL {?e dbo:thumbnail ?pic.}
- OPTIONAL {?e dbo:author ?author.}
-  FILTER langMatches(lang(?desc), "en").
- FILTER langMatches(lang(?name), "en").
-
-
- FILTER regex(?name, "${NomOeuvres}", "i").
-
+  FILTER regex(?name, "${NomOeuvres}", "i").
 
 }
-GROUP BY ?id ?e ?size ?name ?desc ?pic
+GROUP BY ?wikiPageID ?e ?size ?name ?abstract ?pic
 LIMIT 30
   `;
   return requestString;
@@ -239,7 +229,7 @@ function requestMouvements(NomMouvements){
   let requestString;
   requestString = `PREFIX dcterms: <http://purl.org/dc/terms/>
 
-SELECT DISTINCT ?labelMovement ?movement ?id ?pic ?desc
+SELECT DISTINCT ?name ?movement ?wikiPageID ?picture ?abstract
 WHERE {
 
   {
@@ -251,13 +241,13 @@ WHERE {
  }
 
 ?movement dcterms:subject dbc:Art_movements.
-?movement rdfs:label ?labelMovement .
-?movement dbo:wikiPageID ?id.
-?movement dbo:abstract ?desc.
-OPTIONAL {?movement dbo:thumbnail ?pic.}
+?movement rdfs:label ?name .
+?movement dbo:wikiPageID ?wikiPageID.
+?movement dbo:abstract ?abstract.
+OPTIONAL {?movement dbo:thumbnail ?picture.}
 
-FILTER LANGMATCHES(LANG(?labelMovement), "en").
-FILTER LANGMATCHES(LANG(?desc), "en").
+FILTER LANGMATCHES(LANG(?name), "en").
+FILTER LANGMATCHES(LANG(?abstract), "en").
 FILTER regex(?labelMovement, "${NomMouvements}", "i").
 }
 LIMIT 20

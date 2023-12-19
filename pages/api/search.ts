@@ -18,6 +18,7 @@ export default async function handler(req, res) {
             // On recherche les résultats correspondant à la requête de l'utilisateur
 
             const results = await getInfos(q, 'artist');
+            console.log("---------RESPONSE--------------",results);
             // On renvoie les résultats
             res.status(200).json(results);
         } catch (e) {

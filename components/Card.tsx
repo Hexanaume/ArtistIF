@@ -57,10 +57,10 @@ export interface SearchResult {
         value: string;
     };
 }
-const Card = ({ wikiID, title, description, imgSrc, dbPediaLink, href }) => {
+const Card = ({ type, wikiID, title, description, imgSrc, dbPediaLink }) => {
     return (
-        <div key={href} className="md max-w-[544px] p-4 md:w-1/2">
-            <Link href={`/artists/${wikiID}`} passHref>
+        <div className="md max-w-[544px] p-4 md:w-1/2">
+            <Link href={`/${type}/${wikiID}`} passHref>
                 <div
                     className={`${
                         imgSrc && 'h-full'
