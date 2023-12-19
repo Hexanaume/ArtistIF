@@ -19,7 +19,7 @@ const SearchBar = ({ onSearch }) => {
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
                 searchTerm,
-            )}&type=rechercherArtistes`,
+            )}&type=rechercherArtists`,
         );
         console.log('res: ', res);
 

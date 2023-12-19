@@ -71,11 +71,37 @@ function requestInfosArtists(urlArtist){
   return requestString;
 }
 
-export async function rechercher(inputString) {
+function requestOeuvres(NomOeuvres){
+  let requestString;
+  requestString = "à faire ";
+  return requestString;
+}
+function getInfosOeuvre(idOeuvre){
+  let requestString;
+  requestString = "à faire ";
+  return requestString;
+}
+function requestMouvements(NomMouvements){
+  let requestString;
+  requestString = "à faire ";
+  return requestString;
+}
+function getInfosMouvement(idMouvement){
+  let requestString;
+  requestString = "à faire ";
+  return requestString;
+}
+export async function rechercher(inputString,type) {
 
   // Ajout des préfixes
   let requestString;
-  requestString = addDbpediaPrefixes(requestArtists(inputString));
+  if(type === "artist"){
+    requestString = addDbpediaPrefixes(requestArtists(inputString));
+  }else if(type === "oeuvre"){
+  requestString = addDbpediaPrefixes(requestOeuvres(inputString));
+  }else if(type === "mouvement"){
+    requestString = addDbpediaPrefixes(requestMouvements(inputString));
+  }
 
   console.log("requestString",requestString);
 
@@ -92,10 +118,16 @@ export async function rechercher(inputString) {
   }
 
 }
-export async function getInfosArtist(urlArtist){
+export async function getInfos(urlArtist,type){
   // Ajout des préfixes
   let requestString;
-  requestString = addDbpediaPrefixes(requestInfosArtists(urlArtist));
+  if(type === "artist"){
+    requestString = addDbpediaPrefixes(requestInfosArtists(urlArtist));
+  }else if(type === "oeuvre"){
+    requestString = addDbpediaPrefixes(requestOeuvres(urlArtist));
+  } else if(type === "mouvement"){
+    requestString = addDbpediaPrefixes(requestMouvements(urlArtist));
+  }
 
   console.log("requestString",requestString);
 
@@ -110,50 +142,3 @@ export async function getInfosArtist(urlArtist){
   }
 
 }
-// Affichage des résultats dans un tableau
-function afficherResultats(data)
-{
-  // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
-  // pour vos applications, c'est juste pour la démo sous forme de tableau
-  var index = [];
-
-  var contenuTableau = "<tr>";
-
-  data.head.vars.forEach((v, i) => {
-    contenuTableau += "<th>" + v + "</th>";
-    index.push(v);
-  });
-
-  data.results.bindings.forEach(r => {
-    contenuTableau += "<tr>";
-
-    index.forEach(v => {
-
-      if (r[v])
-      {
-        if (r[v].type === "uri")
-        {
-          contenuTableau += "<td><a href='" + r[v].value + "' target='_blank'>" + r[v].value + "</a></td>";
-        }
-        else {
-          contenuTableau += "<td>" + r[v].value + "</td>";
-        }
-      }
-      else
-      {
-        contenuTableau += "<td></td>";
-      }
-
-    });
-
-
-    contenuTableau += "</tr>";
-  });
-
-
-  contenuTableau += "</tr>";
-
-  document.getElementById("resultats").innerHTML = contenuTableau;
-
-}
-
