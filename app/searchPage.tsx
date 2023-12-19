@@ -70,6 +70,7 @@ export default function Home() {
                     searchResults.map((result: SearchResult, index) => {
                         return (
                             <Card
+                                wikiID={result.wikiPageID.value}
                                 title={result.name.value}
                                 description={truncateText(
                                     result.abstract.value,

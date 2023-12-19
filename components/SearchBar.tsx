@@ -15,7 +15,7 @@ const SearchBar = ({ onSearch }) => {
     const handleSearch = async (event) => {
         event.preventDefault();
 
-        console.log('searchTerm: ' + searchTerm);
+        //console.log('searchTerm: ' + searchTerm);
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
                 searchTerm,
@@ -24,7 +24,7 @@ const SearchBar = ({ onSearch }) => {
         console.log('res: ', res);
 
         const results = await res.json();
-        console.log('results: ', results);
+        //console.log('results: ', results);
         setSearchResults(results);
         onSearch(results);
     };

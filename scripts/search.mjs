@@ -20,8 +20,10 @@ function requestArtists(NomArtists){
   let requestString;
   requestString = `
     #Select artists by name
-  SELECT distinct ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
+  SELECT distinct ?wikiPageID ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
       ?artist a foaf:Person .
+      ?artist dbo:wikiPageID ?wikiPageID .
+
       {
         ?artist dbo:movement ?movement .
       }
@@ -32,6 +34,8 @@ function requestArtists(NomArtists){
       ?movement rdfs:label ?labelMovement .
       filter langMatches(lang(?labelMovement),"en").
   
+      ?artist dbo:wikiPageID ?wikiPageID .
+
       ?artist dbp:name ?name .
       ?artist dbo:abstract ?abstract .
       ?thing dbo:author ?artist .
@@ -49,24 +53,48 @@ function requestArtists(NomArtists){
       filter langMatches(lang(?abstract),"en").
       filter contains(?label, "${NomArtists}").
     }
-    GROUP BY ?artist ?name ?abstract ?picture
+    GROUP BY ?wikiPageID ?artist ?name ?abstract ?picture
     LIMIT 20`;
 
   return requestString;
 }
 
 
-function requestInfosArtists(urlArtist){
+function requestInfosArtiste(idArtiste){
   let requestString;
-  requestString = `SELECT distinct ?artist ?label ?abstract  WHERE {
+  requestString = `#Select artist by id : Get name, movement, abstract, thumbnail, year, location, from a WikiPageID, make all elements optional
+SELECT DISTINCT ?wikiPageID ?label ?name ?abstract ?labelMovement
+WHERE {
+ ?artist a foaf:Person .
+ ?artist dbo:wikiPageID ?wikiPageID .
+ FILTER (?wikiPageID = 13623919).
 
-    ?artist dbo:wikiPageLength ?pageLength .
-    ?artist a dbo:Artist.
-    ?artist rdfs:label ?label .
-    ?artist dbo:abstract ?abstract .
-    filter contains(?artist,"${urlArtist}").
+
+ {
+   ?artist dbo:movement ?movement .
+ }
+ UNION
+ {
+   ?artist dbp:movement ?movement .
+ }
+ ?movement rdfs:label ?labelMovement .
+ FILTER LANGMATCHES(LANG(?labelMovement), "en").
+
+
+ ?artist dbp:name ?name .
+ ?artist dbo:abstract ?abstract .
+ ?thing dbo:author ?artist .
+
+
+ # Convert name into string
+ BIND(STR(?name) AS ?label)
   
-  } ORDER BY desc(?pageLength)`;
+ # Filter for English names and abstracts
+ FILTER LANGMATCHES(LANG(?name), "en").
+ FILTER LANGMATCHES(LANG(?abstract), "en").
+}
+LIMIT 1
+`;
 
   return requestString;
 }
@@ -98,7 +126,7 @@ export async function rechercher(inputString,type) {
   if(type === "artist"){
     requestString = addDbpediaPrefixes(requestArtists(inputString));
   }else if(type === "oeuvre"){
-  requestString = addDbpediaPrefixes(requestOeuvres(inputString));
+    requestString = addDbpediaPrefixes(requestOeuvres(inputString));
   }else if(type === "mouvement"){
     requestString = addDbpediaPrefixes(requestMouvements(inputString));
   }
@@ -122,7 +150,7 @@ export async function getInfos(urlArtist,type){
   // Ajout des préfixes
   let requestString;
   if(type === "artist"){
-    requestString = addDbpediaPrefixes(requestInfosArtists(urlArtist));
+    requestString = addDbpediaPrefixes(requestInfosArtiste(urlArtist));
   }else if(type === "oeuvre"){
     requestString = addDbpediaPrefixes(requestOeuvres(urlArtist));
   } else if(type === "mouvement"){
