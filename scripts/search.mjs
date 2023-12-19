@@ -62,7 +62,7 @@ function requestInfosArtists(idArtist)
 // useful for the artist page
 {
   let requestString;
-  requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract 
+  requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract ?thumbnail
 WHERE {
  ?artist a foaf:Person .
  ?artist dbo:wikiPageID ?wikiPageID .
@@ -81,6 +81,7 @@ WHERE {
 
  ?artist dbp:name ?name .
  ?artist dbo:abstract ?abstract .
+ ?artist dbo:thumbnail ?thumbnail .
  ?thing dbo:author ?artist .
 
 

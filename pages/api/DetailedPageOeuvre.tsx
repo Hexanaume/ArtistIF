@@ -1,6 +1,6 @@
 import SearchButton from '@/components/SearchButton';
 import React, { useState, useEffect } from 'react';
-import { rechercher } from '../scripts/search.mjs';
+import { rechercher } from '../../scripts/search.mjs';
 import Card, { SearchResult } from '@/components/Card';
 import DetailledOeuvre from '@/components/DetailledArt';
 
