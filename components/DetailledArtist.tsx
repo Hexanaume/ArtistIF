@@ -67,6 +67,7 @@ export default function DetailledCard({
                     {artworks.map((artwork, index) => {
                         return (
                             <Card
+                                key={index}
                                 type={'oeuvre'}
                                 wikiID={artwork.wikiPageID}
                                 title={artwork.name}
