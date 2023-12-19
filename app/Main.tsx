@@ -1,4 +1,5 @@
 'use client';
+import DetailledArtist from '@/components/DetailledArtist';
 import React from 'react';
 import SearchPage from './searchPage';
 import { UrlProvider } from '@/components/UrlContext';
