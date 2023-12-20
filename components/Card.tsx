@@ -11,7 +11,10 @@ export interface SearchResult {
         type: string;
         value: string;
     };
-
+    type: {
+        type: string;
+        value: string;
+    };
     name: {
         type: string;
         value: string;
