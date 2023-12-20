@@ -2,6 +2,7 @@ import { getInfos, rechercher } from '../../scripts/search.mjs';
 
 export default async function handler(req, res) {
     const q = req.query.query;
+
     const type = req.query.type;
     if (type == 'rechercherArtists') {
         try {
@@ -14,7 +15,7 @@ export default async function handler(req, res) {
         try {
             const results = await getInfos(q, 'artist');
             res.status(200).json(results);
-        } catch (e) { 
+        } catch (e) {
             res.status(500).json({ error: e.message });
         }
     } else if (type == 'rechercherOeuvres') {

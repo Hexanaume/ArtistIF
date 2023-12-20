@@ -4,6 +4,7 @@ import DetailledArt from '@/components/DetailledArt';
 
 import DetailledArtist from '@/components/DetailledArtist';
 import React, { useEffect, useState } from 'react';
+import DetailedArt from '@/components/DetailledArt';
 
 type ArtDetailsProps = {
     labelArt: any;
@@ -19,8 +20,7 @@ type ArtDetailsProps = {
 export default function ArtDetails({ params }) {
     console.log(params);
 
-    const [artDetails, setArtDetails] =
-        useState<ArtDetailsProps | null>(null);
+    const [artDetails, setArtDetails] = useState<ArtDetailsProps | null>(null);
     const getArtDetails = async (artId: string) => {
         const res = await fetch(
             `http://localhost:3000/api/search?query=${encodeURIComponent(
@@ -29,7 +29,6 @@ export default function ArtDetails({ params }) {
         );
         console.log(res);
         const artDetails = await res.json();
-        console.log(artDetails);
         setArtDetails(artDetails);
     };
 

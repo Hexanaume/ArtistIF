@@ -26,7 +26,7 @@ export default function Home() {
         }
     }
     const handleCardSelection = (label, type) => {
-        console.log('label: '+ label,'type: '+ type);
+        console.log('label: ' + label, 'type: ' + type);
         setSelectedCard(label);
         setSelectedCardType(type);
     };
@@ -62,7 +62,10 @@ export default function Home() {
                             label="Artist"
                             icon="/static/images/icons/artist.png"
                             onSelect={() =>
-                                handleCardSelection('rechercherArtists', 'artists')
+                                handleCardSelection(
+                                    'rechercherArtists',
+                                    'artists',
+                                )
                             }
                             cardName="rechercherArtists"
                             selectedCard={selectedCard}
@@ -73,7 +76,10 @@ export default function Home() {
                             label="Artwork"
                             icon="/static/images/icons/mona-lisa.png"
                             onSelect={() =>
-                                handleCardSelection('rechercherOeuvres', 'mouvement')
+                                handleCardSelection(
+                                    'rechercherOeuvres',
+                                    'oeuvres',
+                                )
                             }
                             cardName="rechercherOeuvres"
                             selectedCard={selectedCard}
@@ -84,7 +90,10 @@ export default function Home() {
                             label="Movement"
                             icon="/static/images/icons/abstract.png"
                             onSelect={() =>
-                                handleCardSelection('rechercherMouvements', 'oeuvres')
+                                handleCardSelection(
+                                    'rechercherMouvements',
+                                    'mouvement',
+                                )
                             }
                             cardName="rechercherMouvements"
                             selectedCard={selectedCard}
@@ -116,7 +125,9 @@ export default function Home() {
                                     result.abstract.value,
                                     144,
                                 )}
-                                imgSrc={result.picture ? result.picture.value : null}
+                                imgSrc={
+                                    result.picture ? result.picture.value : null
+                                }
                                 key={index}
                             />
                         );
