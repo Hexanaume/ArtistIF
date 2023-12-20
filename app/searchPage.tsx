@@ -52,6 +52,20 @@ export default function Home() {
                 >
                     <div className="mb-6 flex flex-row justify-center space-x-16">
                         <SearchTypeCard
+                          type="all"
+                          label="All"
+                          icon="/static/images/icons/artist.png"
+                          onSelect={() =>
+                            handleCardSelection(
+                              'rechercherAll',
+                              'all',
+                            )
+                          }
+                          cardName="rechercherAll"
+                          selectedCard={selectedCard}
+                          selectedCardType={selectedCardType}
+                        />
+                        <SearchTypeCard
                             type="artists"
                             label="Artist"
                             icon="/static/images/icons/artist.png"
@@ -112,7 +126,7 @@ export default function Home() {
                     searchResults.map((result: SearchResult, index) => {
                         return (
                             <Card
-                                type={selectedCardType}
+                                type={result.type.value}
                                 wikiID={result.wikiPageID.value}
                                 title={result.name.value}
                                 description={truncateText(

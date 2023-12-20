@@ -20,7 +20,8 @@ function addDbpediaPrefixes(requestString) {
 function requestArtists(NomArtists){
   let requestString;
   requestString = `
-    SELECT distinct ?wikiPageID ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
+    SELECT distinct ?type ?wikiPageID ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
+   BIND("artists" AS ?type)
    ?artist a foaf:Person .
    ?artist dbo:wikiPageID ?wikiPageID .
    {
@@ -52,8 +53,104 @@ function requestArtists(NomArtists){
    filter langMatches(lang(?abstract),"en").
    FILTER regex(?name, "${NomArtists}", "i").
  }
- GROUP BY ?wikiPageID ?artist ?name ?abstract ?picture
+ GROUP BY ?type ?wikiPageID ?artist ?name ?abstract ?picture
  LIMIT 30
+`;
+
+  return requestString;
+}
+
+function requestAll(inputString){
+  let requestString;
+  requestString = `
+    SELECT DISTINCT ?type ?name ?wikiPageID ?picture ?abstract 
+WHERE {
+    {
+        BIND("mouvement" AS ?type)
+        {
+        ?e dbo:movement ?artist .
+        }
+        UNION
+        {
+        ?e dbp:movement ?artist .
+        }
+
+        ?movement dcterms:subject dbc:Art_movements.
+        ?movement rdfs:label ?name .
+        ?movement dbo:wikiPageID ?wikiPageID.
+        ?movement dbo:abstract ?abstract.
+        OPTIONAL {?movement dbo:thumbnail ?picture.}
+
+        FILTER LANGMATCHES(LANG(?name), "en").
+        FILTER LANGMATCHES(LANG(?abstract), "en").
+        FILTER regex(?name, "ren", "i").
+    }
+    UNION
+    {
+        BIND("oeuvres" AS ?type)
+        ?artwork a dbo:Artwork.
+        ?artwork dbo:wikiPageID ?wikiPageID.
+
+        OPTIONAL{
+        {
+        ?artwork dbo:movement ?movement.
+        }
+        UNION
+        {
+        ?artwork dbp:movement ?movement.
+        }
+        }
+        ?artwork dbo:author ?artist.
+        ?artist a foaf:Person.
+        ?artwork dbo:wikiPageLength ?size.
+        ?artwork rdfs:label ?name.
+        ?artwork dbo:abstract ?abstract.
+        ?artwork dbo:thumbnail ?picture
+        OPTIONAL {?artwork dbo:author ?author.}
+        FILTER langMatches(lang(?abstract), "en").
+        FILTER langMatches(lang(?name), "en").
+
+
+        FILTER regex(?name, "ren", "i").
+
+    }
+    UNION
+    {
+        BIND("artists" AS ?type)
+        ?artist a foaf:Person .
+        ?artist dbo:wikiPageID ?wikiPageID .
+        {
+            ?artist dbo:movement ?movement .
+        }
+        UNION
+        {
+            ?artist dbp:movement ?movement .
+        }
+        ?movement rdfs:label ?labelMovement .
+        filter langMatches(lang(?labelMovement),"en").
+
+
+        ?artist dbo:wikiPageID ?wikiPageID .
+
+
+        ?artist dbp:name ?nameArtist .
+        ?artist dbo:abstract ?abstract .
+        ?thing dbo:author ?artist .
+        ?thing a dbo:Artwork .
+
+        ?artist dbo:thumbnail ?picture .
+
+        #convert name into string
+        bind(str(?nameArtist) as ?name)
+        
+        #filtrer pour avoir seulement des noms en anglais
+        filter langMatches(lang(?nameArtist),"en").
+        filter langMatches(lang(?abstract),"en").
+        FILTER regex(?nameArtist, "ren", "i").
+    }
+}
+ORDER BY ASC(?name)
+LIMIT 40
 `;
 
   return requestString;
@@ -103,8 +200,9 @@ LIMIT 1
 
 function requestOeuvres(NomOeuvres){
   let requestString;
-  requestString = `SELECT ?wikiPageID ?artwork ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
+  requestString = `SELECT ?type ?wikiPageID ?artwork ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
 WHERE {
+  BIND("oeuvres" AS ?type)
  ?artwork a dbo:Artwork.
  ?artwork dbo:wikiPageID ?wikiPageID.
 
@@ -131,7 +229,7 @@ UNION
   FILTER regex(?name, "${NomOeuvres}", "i").
 
 }
-GROUP BY ?wikiPageID ?artwork ?size ?name ?abstract ?picture
+GROUP BY ?type ?wikiPageID ?artwork ?size ?name ?abstract ?picture
 LIMIT 30
   `;
   return requestString;
@@ -244,8 +342,9 @@ WHERE {
 
 function requestMouvements(NomMouvements){
   let requestString;
-  requestString = `SELECT DISTINCT ?name ?movement ?wikiPageID ?picture ?abstract
+  requestString = `SELECT DISTINCT ?type ?name ?movement ?wikiPageID ?picture ?abstract
 WHERE {
+BIND("mouvement" AS ?type)
   {
    ?e dbo:movement ?artist .
  }
@@ -369,7 +468,9 @@ export async function rechercher(inputString,type) {
 
   // Ajout des préfixes
   let requestString;
-  if(type === "artist"){
+  if(type === "all"){
+    requestString = addDbpediaPrefixes(requestAll(inputString));
+  }else if(type === "artist"){
     requestString = addDbpediaPrefixes(requestArtists(inputString));
   }else if(type === "oeuvre"){
   requestString = addDbpediaPrefixes(requestOeuvres(inputString));
@@ -395,6 +496,7 @@ export async function rechercher(inputString,type) {
 export async function getInfos(id,type){
   // Ajout des préfixes
   let requestString;
+
   if(type === "artist"){
     try {
       const resInfos = await callAPI(addDbpediaPrefixes(requestInfosArtists(id)));

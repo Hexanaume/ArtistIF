@@ -4,7 +4,14 @@ export default async function handler(req, res) {
     const q = req.query.query;
 
     const type = req.query.type;
-    if (type == 'rechercherArtists') {
+    if (type == 'rechercherAll') {
+        try {
+            const results = await rechercher(q, 'all');
+            res.status(200).json(results);
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+    } else if (type == 'rechercherArtists') {
         try {
             const results = await rechercher(q, 'artist');
             res.status(200).json(results);
