@@ -84,13 +84,19 @@ const Card = ({ type, wikiID, title, description, imgSrc }) => {
                     </div>
 
                     <div className="p-6">
-                        <h2 className="mb-3 text-2xl font-bold leading-8 tracking-tight">
-                            {title}
-                        </h2>
+                        <div className={'flex flex-row'}>
+                            <img
+                                className="mr-2 h-12 w-12"
+                                src={`static/images/icons/${type}.png`}
+                                alt={'type of result'}
+                            />
+                            <h2 className="mb-3 text-2xl font-bold leading-8 tracking-tight">
+                                {title}
+                            </h2>
+                        </div>
                         <h2 className="mb-3 text-xl font-medium leading-8 tracking-tight">
                             {description}
                         </h2>
-
                     </div>
                 </div>
             </Link>

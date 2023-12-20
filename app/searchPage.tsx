@@ -54,7 +54,7 @@ export default function Home() {
                         <SearchTypeCard
                             type="artists"
                             label="Artist"
-                            icon="/static/images/icons/artist.png"
+                            icon="/static/images/icons/artists.png"
                             onSelect={() =>
                                 handleCardSelection(
                                     'rechercherArtists',
@@ -68,7 +68,7 @@ export default function Home() {
                         <SearchTypeCard
                             type="mouvement"
                             label="Artwork"
-                            icon="/static/images/icons/mona-lisa.png"
+                            icon="/static/images/icons/oeuvres.png"
                             onSelect={() =>
                                 handleCardSelection(
                                     'rechercherOeuvres',
@@ -82,7 +82,7 @@ export default function Home() {
                         <SearchTypeCard
                             type="oeuvres"
                             label="Movement"
-                            icon="/static/images/icons/abstract.png"
+                            icon="/static/images/icons/mouvement.png"
                             onSelect={() =>
                                 handleCardSelection(
                                     'rechercherMouvements',
