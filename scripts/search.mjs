@@ -1,4 +1,4 @@
-import { buildArtJson, buildFullArtistJson } from "./utils.js";
+import { buildArtJson, buildFullArtistJson,buildMovementJson } from "./utils.js";
 
 function addDbpediaPrefixes(requestString) {
   // append the prefixes to the request string
@@ -409,9 +409,7 @@ export async function getInfos(id,type){
 
   }else if(type === "oeuvre"){
     try {
-      console.log(getInfosOeuvre(id));
       const resultat = await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
-      console.log(resultat.results.bindings);
       return buildArtJson(resultat);
     } catch (error) {
       return console.log("Erreur : " + error);
@@ -419,9 +417,12 @@ export async function getInfos(id,type){
   } else if(type === "mouvement"){
     try {
       const resInfos = await callAPI(addDbpediaPrefixes(getInfosMouvement(id)));
-      const resArtistes = await callAPI(addDbpediaPrefixes(getArtistesMouvement(id)));
-      const resOeuvres = await callAPI(addDbpediaPrefixes(getOeuvresMouvement(id)));
-      return resInfos;
+      //const resArtistes = await callAPI(addDbpediaPrefixes(getArtistesMouvement(id)));
+      //const resOeuvres = await callAPI(addDbpediaPrefixes(getOeuvresMouvement(id)));
+      console.log("resInfos",resInfos);
+      const res= buildMovementJson(resInfos);
+      console.log("res",res);
+      return res;
     } catch (error) {
       return console.log("Erreur : " + error);
     }

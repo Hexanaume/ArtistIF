@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import DetailledMovement from '@/components/DetailledMovement';
 
 type MouvementDetailsProps = {
-    name:string;
+    desc: any;
+    pic: any;
+    labelMovement: any;
     picture:string;
     year:string;
-    description:string;
 };
 
 export default function MouvementDetails({ params }) {
@@ -32,10 +33,10 @@ export default function MouvementDetails({ params }) {
         <>
             {mouvementDetails && (
                 <DetailledMovement
-                    name={mouvementDetails.name}
-                    picture={mouvementDetails.name}
-                    year={mouvementDetails.name}
-                    description={mouvementDetails.name}
+                    name={mouvementDetails.labelMovement}
+                    picture={mouvementDetails.pic}
+                    year={mouvementDetails.labelMovement}
+                    description={mouvementDetails.desc}
                 />
             )}
         </>
