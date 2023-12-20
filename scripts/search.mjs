@@ -319,7 +319,7 @@ LIMIT 1
 
 function getArtistesMouvement(idMouvement) {
     let requestString;
-    requestString = `SELECT DISTINCT ?artist ?name ?size
+    requestString = `SELECT DISTINCT ?wikiPageID ?artist ?name ?size ?abstract ?thumbnail
 WHERE {
 ?artist a foaf:Person.
 {
@@ -329,12 +329,17 @@ UNION
  {
 ?artist dbp:movement ?movement.
 }
+?artist dbo:wikiPageID ?wikiPageID.
+?artist dbo:abstract ?abstract.
+?artist dbo:thumbnail ?thumbnail.
 
 ?movement dbo:wikiPageID ?id.
 ?artist dbp:name ?name.
 ?artist dbo:wikiPageLength ?size.
 FILTER(?id=${idMouvement}).
  FILTER LANGMATCHES(LANG(?name), "en").
+ FILTER LANGMATCHES(LANG(?abstract), "en").
+
 }
 ORDER BY DESC(?size)
 LIMIT 20
@@ -344,7 +349,7 @@ LIMIT 20
 
 function getOeuvresMouvement(idMouvement) {
     let requestString;
-    requestString = `SELECT DISTINCT ?artwork?name ?size
+    requestString = `SELECT DISTINCT ?artwork ?name ?size ?abstract ?thumbnail ?wikiPageID
 WHERE {
 
 ?artwork a dbo:Artwork .
@@ -352,10 +357,18 @@ WHERE {
  {
 ?artwork dbp:movement ?movement.
 }
+
+?artwork dbo:abstract ?abstract.
+?artwork dbo:thumbnail ?thumbnail.
+
+
 ?movement dbo:wikiPageID ?id.
+?artwork dbo:wikiPageID ?wikiPageID.
+
 ?artwork rdfs:label ?name.
 FILTER langMatches(lang(?name), "en").
 FILTER (?id=${idMouvement}).
+FILTER langMatches(lang(?abstract), "en").
 
 ?artwork dbo:wikiPageLength ?size.
 
@@ -435,9 +448,8 @@ export async function getInfos(id, type) {
             const resOeuvres = await callAPI(
                 addDbpediaPrefixes(getOeuvresMouvement(id)),
             );
-            console.log('resInfos', resInfos);
             const res = buildMovementJson(resInfos, resArtistes, resOeuvres);
-            console.log('res', res);
+            //console.log('res', res);
             return res;
         } catch (error) {
             return console.log('Erreur : ' + error);

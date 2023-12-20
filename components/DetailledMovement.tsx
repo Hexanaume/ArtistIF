@@ -4,7 +4,14 @@ import ImageWithFallback from './ImageWithFallback';
 import Card from '@/components/Card';
 import { truncateText } from '../scripts/utils';
 
-const DetailledCard = ({ name, picture, year, description, oeuvres }) => (
+const DetailledCard = ({
+    name,
+    picture,
+    year,
+    description,
+    oeuvres,
+    artists,
+}) => (
     <div className="flex flex-col rounded-lg bg-white p-6 shadow-lg">
         <h2 className="mb-4 p-4 text-5xl font-bold">{name}</h2>
         <div className="mb-4 flex flex-col py-2 md:flex-row">
@@ -26,19 +33,34 @@ const DetailledCard = ({ name, picture, year, description, oeuvres }) => (
         <div>
             <p className="mr-2 text-xl font-bold">Artwork(s):</p>
             <div className={'flex flex-row flex-wrap'}>
-                {oeuvres.map((artwork, index) => {
+                {oeuvres.map((oeuvre, index) => {
                     return (
                         <Card
                             key={index}
                             type={'oeuvres'}
-                            wikiID={oeuvres.wikiPageID}
-                            title={oeuvres.name}
-                            description={truncateText(oeuvres.abstract, 144)}
-                            imgSrc={oeuvres.thumbnail_url}
+                            wikiID={oeuvre.wikiPageID}
+                            title={oeuvre.name}
+                            description={truncateText(oeuvre.abstract, 144)}
+                            imgSrc={oeuvre.thumbnail_url}
                         />
                     );
                 })}
             </div>
+            {/* <p className="mr-2 text-xl font-bold">Artists(s):</p>
+            <div className={'flex flex-row flex-wrap'}>
+                {artists.map((artist, index) => {
+                    return (
+                        <Card
+                            key={index}
+                            type={'artists'}
+                            wikiID={artist.wikiPageID}
+                            title={artist.name}
+                            description={truncateText(artist.abstract, 144)}
+                            imgSrc={artist.thumbnail_url}
+                        />
+                    );
+                })}
+            </div> */}
         </div>
     </div>
 );

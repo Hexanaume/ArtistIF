@@ -1,14 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import React, { useEffect, useState } from 'react';
 import DetailledMovement from '@/components/DetailledMovement';
+import { List } from 'postcss/lib/list';
 
 type MouvementDetailsProps = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     desc: any;
     pic: any;
     labelMovement: any;
     picture: string;
     year: string;
     oeuvres: Array<{
+        wikiPageID: string;
+        name: string;
+        abstract: string;
+        thumbnail_url: string;
+    }>;
+    artists: Array<{
         wikiPageID: string;
         name: string;
         abstract: string;
@@ -44,48 +53,10 @@ export default function MouvementDetails({ params }) {
                     picture={mouvementDetails.pic}
                     year={mouvementDetails.labelMovement}
                     description={mouvementDetails.desc}
+                    oeuvres={mouvementDetails.oeuvres}
+                    artists={mouvementDetails.artists}
                 />
             )}
-            <div className="flex flex-row flex-wrap">
-                {oeuvres.length > 0 &&
-                    oeuvres.map((result: SearchResult, index) => {
-                        return (
-                            <Card
-                                type={selectedCardType}
-                                wikiID={result.wikiPageID.value}
-                                title={result.name.value}
-                                description={truncateText(
-                                    result.abstract.value,
-                                    144,
-                                )}
-                                imgSrc={
-                                    result.picture ? result.picture.value : null
-                                }
-                                key={index}
-                            />
-                        );
-                    })}
-            </div>
-            <div className="flex flex-row flex-wrap">
-                {searchResults.length > 0 &&
-                    searchResults.map((result: SearchResult, index) => {
-                        return (
-                            <Card
-                                type={selectedCardType}
-                                wikiID={result.wikiPageID.value}
-                                title={result.name.value}
-                                description={truncateText(
-                                    result.abstract.value,
-                                    144,
-                                )}
-                                imgSrc={
-                                    result.picture ? result.picture.value : null
-                                }
-                                key={index}
-                            />
-                        );
-                    })}
-            </div>
         </>
     );
 }

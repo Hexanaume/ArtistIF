@@ -63,22 +63,21 @@ export const buildArtJson = (artResult) => {
 
 export const buildMovementJson = (movementResult, resArtistes, resOeuvres) => {
     const movement = movementResult.results.bindings[0];
-    const movementList = resArtistes.results.bindings;
+    const artistList = resArtistes.results.bindings;
     const oeuvres = resOeuvres.results.bindings;
 
     const oeuvresJson = oeuvres.map((oeuvre) => {
         return {
             wikiPageID: oeuvre.wikiPageID.value,
-            name: oeuvre.artworkLabel.value,
+            name: oeuvre.name.value,
             abstract: oeuvre.abstract.value,
             thumbnail_url: !oeuvre.thumbnail ? null : oeuvre.thumbnail.value,
         };
     });
-
-    const artistesJson = movementList.map((artist) => {
+    const artistesJson = artistList.map((artist) => {
         return {
             wikiPageID: artist.wikiPageID.value,
-            name: artist.label.value,
+            name: artist.name.value,
             abstract: artist.abstract.value,
             thumbnail_url: artist.thumbnail.value,
         };
@@ -90,44 +89,12 @@ export const buildMovementJson = (movementResult, resArtistes, resOeuvres) => {
         id: movement.id.value,
         pic: movement.pic.value,
         desc: movement.desc.value,
-        oeuvres: oeuvresJson,
-        artistes: artistesJson,
     };
+
+    movementJson.oeuvres = oeuvresJson;
+    movementJson.artistes = artistesJson;
     console.log(movementJson);
-
     return movementJson;
-
-    // const movementResult = artistResult.results.bindings[0];
-    // const movementList = movementsResult.results.bindings;
-    // const oeuvres = oeuvresResult.results.bindings;
-
-    // const artistJson = {
-    //     wikiPageID: artist.wikiPageID.value,
-    //     name: artist.label.value,
-    //     abstract: artist.abstract.value,
-    //     thumbnail_url: artist.thumbnail.value,
-    // };
-
-    // // parse the movementsResult to get the movements
-    // const movements = movementList.map((movement) => {
-    //     return {
-    //         label: movement.labelMovement.value,
-    //         wikiPageID: movement.movementWikiPageID.value,
-    //     };
-    // });
-
-    // // parse the oeuvresResult to get the oeuvres
-    // const oeuvresJson = oeuvres.map((oeuvre) => {
-    //     return {
-    //         wikiPageID: oeuvre.wikiPageID.value,
-    //         name: oeuvre.artworkLabel.value,
-    //         abstract: oeuvre.abstract.value,
-    //         thumbnail_url: !oeuvre.thumbnail ? null : oeuvre.thumbnail.value,
-    //     };
-    // });
-
-    // artistJson.movements = movements;
-    // artistJson.oeuvres = oeuvresJson;
 };
 
 export function truncateText(text, maxLength) {
