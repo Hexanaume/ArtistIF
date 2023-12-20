@@ -33,11 +33,7 @@ export default function DetailledArtist({
                                             href={`/mouvement/${movement.wikiPageID}`}
                                         >
                                             <span className="text-lg">
-
-                                                {movement.label}zded
-
                                                 {movement.label + ', '}
-
                                             </span>
                                         </Link>
                                     );
