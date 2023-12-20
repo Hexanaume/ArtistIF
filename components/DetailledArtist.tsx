@@ -3,8 +3,9 @@ import Image, { FALLBACK_IMAGE_URL } from './Image';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import Card from '@/components/Card';
 import { truncateText } from '../scripts/utils';
+import Link from 'next/link';
 
-export default function DetailledCard({
+export default function DetailledArtist({
     name,
     picture,
     movements,
@@ -26,10 +27,16 @@ export default function DetailledCard({
                         <div className={'flex flex-row flex-wrap'}>
                             {movements.map((movement, index) => {
                                 if (index !== movements.length - 1) {
+                                    console.log(movement);
                                     return (
-                                        <span key={index} className="mr-2">
-                                            {`${movement.label},`}
-                                        </span>
+                                        <Link
+                                            key={index}
+                                            href={`/mouvement/${movement.wikiPageID}`}
+                                        >
+                                            <span className="text-lg">
+                                                {movement.label}
+                                            </span>
+                                        </Link>
                                     );
                                 } else {
                                     return (

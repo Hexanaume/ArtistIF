@@ -49,7 +49,7 @@ export default function ArtDetails({ params }) {
                     name={artDetails.name}
                     artist={artDetails.artist}
                     description={artDetails.abstract}
-                    movement={artDetails.movement.label}
+                    movement={artDetails.movement}
                     imgSrc={artDetails.thumbnail_url}
                     date={artDetails.completionDate}
                     location={artDetails.locationLabel}

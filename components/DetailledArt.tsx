@@ -41,7 +41,9 @@ const DetailedArt = ({
                     <span className="mr-2 text-xl font-bold">
                         Art Movement:
                     </span>
-                    <span className="text-lg">{movement}</span>
+                    <Link href={`/mouvement/${movement.id}`}>
+                        <span className="text-lg">{movement.label}</span>
+                    </Link>
                 </div>
                 <div className="mb-2 flex">
                     <span className="mr-2 text-xl font-bold">
