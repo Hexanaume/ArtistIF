@@ -48,10 +48,6 @@ export default async function handler(req, res) {
         }
     } else if (type == 'getInfosMouvement') {
         try {
-<<<<<<< HEAD
-=======
-            console.log('id : ', q);
->>>>>>> feat/movementDetails
             const results = await getInfos(q, 'mouvement');
             res.status(200).json(results);
         } catch (e) {

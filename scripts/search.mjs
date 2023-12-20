@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-import { buildArtJson, buildFullArtistJson, buildMovementJson } from "./utils.js";
-=======
 import {
     buildArtJson,
     buildFullArtistJson,
     buildMovementJson,
 } from './utils.js';
->>>>>>> feat/movementDetails
 
 function addDbpediaPrefixes(requestString) {
     // append the prefixes to the request string
@@ -26,18 +22,11 @@ function addDbpediaPrefixes(requestString) {
     return prefixes + requestString;
 }
 
-<<<<<<< HEAD
-function requestArtists(NomArtists){
-  let requestString;
-  requestString = `
-    SELECT distinct ?type ?wikiPageID ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
-   BIND("artists" AS ?type)
-=======
 function requestArtists(NomArtists) {
     let requestString;
     requestString = `
-    SELECT distinct ?wikiPageID ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
->>>>>>> feat/movementDetails
+    SELECT distinct ?type ?wikiPageID ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
+   BIND("artists" AS ?type)
    ?artist a foaf:Person .
    ?artist dbo:wikiPageID ?wikiPageID .
    {
@@ -76,10 +65,9 @@ function requestArtists(NomArtists) {
     return requestString;
 }
 
-<<<<<<< HEAD
-function requestAll(inputString){
-  let requestString;
-  requestString = `
+function requestAll(inputString) {
+    let requestString;
+    requestString = `
     SELECT DISTINCT ?type ?name ?wikiPageID ?picture ?abstract 
 WHERE {
     {
@@ -170,23 +158,14 @@ ORDER BY ASC(?name)
 LIMIT 40
 `;
 
-  return requestString;
+    return requestString;
 }
 
-
-function requestInfosArtists(idArtist)
-// gets the information about an artist from its id
-// useful for the artist page
-{
-  let requestString;
-  requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract ?thumbnail
-=======
 function requestInfosArtists(idArtist) {
     // gets the information about an artist from its id
     // useful for the artist page
     let requestString;
     requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract ?thumbnail
->>>>>>> feat/movementDetails
 WHERE {
  ?artist a foaf:Person .
  ?artist dbo:wikiPageID ?wikiPageID .
@@ -222,15 +201,9 @@ LIMIT 1
     return requestString;
 }
 
-<<<<<<< HEAD
-function requestOeuvres(NomOeuvres){
-  let requestString;
-  requestString = `SELECT ?type ?wikiPageID ?artwork ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
-=======
 function requestOeuvres(NomOeuvres) {
     let requestString;
-    requestString = `SELECT ?wikiPageID ?artwork ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
->>>>>>> feat/movementDetails
+    requestString = `SELECT ?type ?wikiPageID ?artwork ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
 WHERE {
   BIND("oeuvres" AS ?type)
  ?artwork a dbo:Artwork.
@@ -370,15 +343,9 @@ WHERE {
     return requestString;
 }
 
-<<<<<<< HEAD
-function requestMouvements(NomMouvements){
-  let requestString;
-  requestString = `SELECT DISTINCT ?type ?name ?movement ?wikiPageID ?picture ?abstract
-=======
 function requestMouvements(NomMouvements) {
     let requestString;
-    requestString = `SELECT DISTINCT ?name ?movement ?wikiPageID ?picture ?abstract
->>>>>>> feat/movementDetails
+    requestString = `SELECT DISTINCT ?type ?name ?movement ?wikiPageID ?picture ?abstract
 WHERE {
 BIND("mouvement" AS ?type)
   {
@@ -515,7 +482,9 @@ LIMIT 20
 export async function rechercher(inputString, type) {
     // Ajout des préfixes
     let requestString;
-    if (type === 'artist') {
+    if (type === 'all') {
+        requestString = addDbpediaPrefixes(requestAll(inputString));
+    } else if (type === 'artist') {
         requestString = addDbpediaPrefixes(requestArtists(inputString));
     } else if (type === 'oeuvre') {
         requestString = addDbpediaPrefixes(requestOeuvres(inputString));
@@ -525,39 +494,11 @@ export async function rechercher(inputString, type) {
 
     console.log('requestString', requestString);
 
-<<<<<<< HEAD
-  // Ajout des préfixes
-  let requestString;
-  if(type === "all"){
-    requestString = addDbpediaPrefixes(requestAll(inputString));
-  }else if(type === "artist"){
-    requestString = addDbpediaPrefixes(requestArtists(inputString));
-  }else if(type === "oeuvre"){
-  requestString = addDbpediaPrefixes(requestOeuvres(inputString));
-  }else if(type === "mouvement"){
-    requestString = addDbpediaPrefixes(requestMouvements(inputString));
-  }
-
-  console.log("requestString",requestString);
-
-  const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(requestString) + "&format=json";
-  //console.log(url);
-
-  try {
-    const response = await fetch(url);
-    const responseJson = await response.json();
-    console.log(responseJson.results.bindings);
-    return responseJson.results.bindings;
-  } catch (error) {
-    return console.log("Erreur : " + error);
-  }
-=======
     const url =
         'https://dbpedia.org/sparql?query=' +
         encodeURIComponent(requestString) +
         '&format=json';
     //console.log(url);
->>>>>>> feat/movementDetails
 
     try {
         const response = await fetch(url);
@@ -568,17 +509,6 @@ export async function rechercher(inputString, type) {
         return console.log('Erreur : ' + error);
     }
 }
-<<<<<<< HEAD
-export async function getInfos(id,type){
-  // Ajout des préfixes
-  let requestString;
-
-  if(type === "artist"){
-    try {
-      const resInfos = await callAPI(addDbpediaPrefixes(requestInfosArtists(id)));
-      const resOeuvres = await callAPI(addDbpediaPrefixes(requestOeuvresArtiste(id)));
-      const resMouvements = await callAPI(addDbpediaPrefixes(requestMouvementsArtiste(id)));
-=======
 export async function getInfos(id, type) {
     // Ajout des préfixes
     let requestString;
@@ -593,7 +523,6 @@ export async function getInfos(id, type) {
             const resMouvements = await callAPI(
                 addDbpediaPrefixes(requestMouvementsArtiste(id)),
             );
->>>>>>> feat/movementDetails
 
             // add the artist info to the artist object
             return buildFullArtistJson(resInfos, resMouvements, resOeuvres);
@@ -627,29 +556,6 @@ export async function getInfos(id, type) {
             return console.log('Erreur : ' + error);
         }
     }
-<<<<<<< HEAD
-
-  }else if(type === "oeuvre"){
-    try {
-      const resultat = await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
-      return buildArtJson(resultat);
-    } catch (error) {
-      return console.log("Erreur : " + error);
-    }
-  } else if(type === "mouvement"){
-    try {
-      const resInfos = await callAPI(addDbpediaPrefixes(getInfosMouvement(id)));
-      //const resArtistes = await callAPI(addDbpediaPrefixes(getArtistesMouvement(id)));
-      //const resOeuvres = await callAPI(addDbpediaPrefixes(getOeuvresMouvement(id)));
-      return buildMovementJson(resInfos);
-    } catch (error) {
-      return console.log("Erreur : " + error);
-    }
-
-  }
-
-=======
->>>>>>> feat/movementDetails
 }
 
 async function callAPI(requestString) {
