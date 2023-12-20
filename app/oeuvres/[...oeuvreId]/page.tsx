@@ -6,11 +6,11 @@ import DetailledArtist from '@/components/DetailledArtist';
 import React, { useEffect, useState } from 'react';
 
 type ArtDetailsProps = {
-    wikiPageID: string;
+    labelArt: any;
     labelArtist: string;
     abstract: string;
     labelMovement: string;
-    thumbnail: string;
+    thumbnail_url: string;
     completionDate: string;
     locationLabel: string;
     price: string;
@@ -41,13 +41,13 @@ export default function ArtDetails({ params }) {
         <>
             {artDetails && (
                 <DetailledArt 
-                    name={artDetails.wikiPageID} 
+                    name={artDetails.labelArt} 
                     author={artDetails.labelArtist} 
                     description={artDetails.abstract}
                     movement={artDetails.labelMovement} 
-                    imgSrc={artDetails.thumbnail} 
+                    imgSrc={artDetails.thumbnail_url} 
                     date={artDetails.completionDate} 
-                    location={artDetails.locationLabel} 
+                    location={artDetails.locationLabel.value} 
                     price={artDetails.price}
                 />
             )}

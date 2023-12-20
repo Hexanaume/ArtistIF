@@ -27,6 +27,7 @@ export default async function handler(req, res) {
     } else if (type == 'getInfosOeuvre') {
         try {
             const results = await getInfos(q, 'oeuvre');
+            //console.log(results);
             res.status(200).json(results);
         } catch (e) {
             res.status(500).json({ error: e.message });

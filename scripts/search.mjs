@@ -1,4 +1,6 @@
 import {buildFullArtistJson} from "./utils.js";
+import {buildArtJson} from "./utils.js";
+
 function addDbpediaPrefixes(requestString) {
   // append the prefixes to the request string
   const prefixes = 'PREFIX owl: <http://www.w3.org/2002/07/owl#> \n' +
@@ -135,60 +137,63 @@ LIMIT 30
 
 function getInfosOeuvre(idOeuvre){
   let requestString;
-  requestString = `SELECT DISTINCT ?wikiPageID ?labelArtist ?abstract ?labelMovement ?thumbnail ?completionDate ?locationLabel ?price
-WHERE {
- ?artwork a dbo:Artwork .
- ?artwork dbo:wikiPageID ?wikiPageID .
- FILTER (?wikiPageID = ${idOeuvre}).
-
-
- ?artwork dbo:author ?artist .
- ?artist dbp:name ?name .
- ?artist dbo:abstract ?abstract .
- ?thing dbo:author ?artist .
-OPTIONAL{
- {
-   ?artist dbo:movement ?movement .
- }
- UNION
- {
-   ?artist dbp:movement ?movement .
- }
-}
- ?movement rdfs:label ?labelMovement .
- FILTER LANGMATCHES(LANG(?labelMovement), "en").
-
-
- OPTIONAL {
-   ?artwork dbo:thumbnail ?thumbnail .
- }
- OPTIONAL {
+  requestString = `SELECT DISTINCT ?wikiPageID ?labelArt ?labelArtist ?abstract ?labelMovement ?thumbnail ?completionDate ?locationLabel ?price
+  WHERE {
+   ?artwork a dbo:Artwork .
+   ?artwork dbo:wikiPageID ?wikiPageID .
+   
+   FILTER (?wikiPageID = ${idOeuvre}).
+  
+   ?artwork dbp:title ?labelArt
+   FILTER LANGMATCHES(LANG(?labelArt), "en").
+  
+   ?artwork dbo:author ?artist .
+   ?artist dbp:name ?name .
+   ?artist dbo:abstract ?abstract .
+   ?thing dbo:author ?artist .
+  OPTIONAL{
    {
-     ?artwork dbp:year ?completionDate .
+     ?artist dbo:movement ?movement .
    }
    UNION
    {
-     ?artwork dbp:completionDate ?completionDate .
+     ?artist dbp:movement ?movement .
    }
- }
- OPTIONAL {
-   ?artwork dbo:museum ?location .
-   ?location rdfs:label ?locationLabel .
-   FILTER LANGMATCHES(LANG(?locationLabel), "en").
- }
- OPTIONAL {
-   ?artwork dbo:price ?price .
- }
-
-
- # Convert name into string
- BIND(STR(?name) AS ?labelArtist)
+  }
+   ?movement rdfs:label ?labelMovement .
+   FILTER LANGMATCHES(LANG(?labelMovement), "en").
   
- # Filter for English names and abstracts
- FILTER LANGMATCHES(LANG(?name), "en").
- FILTER LANGMATCHES(LANG(?abstract), "en").
-}
-LIMIT 1
+  
+   OPTIONAL {
+     ?artwork dbo:thumbnail ?thumbnail .
+   }
+   OPTIONAL {
+     {
+       ?artwork dbp:year ?completionDate .
+     }
+     UNION
+     {
+       ?artwork dbp:completionDate ?completionDate .
+     }
+   }
+   OPTIONAL {
+     ?artwork dbo:museum ?location .
+     ?location rdfs:label ?locationLabel .
+     FILTER LANGMATCHES(LANG(?locationLabel), "en").
+   }
+   OPTIONAL {
+     ?artwork dbo:price ?price .
+   }
+  
+  
+   # Convert name into string
+   BIND(STR(?name) AS ?labelArtist)
+    
+   # Filter for English names and abstracts
+   FILTER LANGMATCHES(LANG(?name), "en").
+   FILTER LANGMATCHES(LANG(?abstract), "en").
+  }
+  LIMIT 1
   `;
   return requestString;
 }
@@ -409,8 +414,12 @@ export async function getInfos(id,type){
 
   }else if(type === "oeuvre"){
     try {
-      console.log("id",id);
-      return await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
+      const resultat = await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
+      console.log("getInfosOeuvre(id)",getInfosOeuvre(id));
+      console.log("resultat",resultat);
+      const resultat2 = buildArtJson(resultat);
+      console.log("resultat2",resultat2);
+      return resultat2;
     } catch (error) {
       return console.log("Erreur : " + error);
     }
