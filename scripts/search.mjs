@@ -1,5 +1,4 @@
-import {buildFullArtistJson} from "./utils.js";
-import {buildArtJson} from "./utils.js";
+import { buildArtJson, buildFullArtistJson } from "./utils.js";
 
 function addDbpediaPrefixes(requestString) {
   // append the prefixes to the request string
@@ -137,7 +136,7 @@ LIMIT 30
 
 function getInfosOeuvre(idOeuvre){
   let requestString;
-  requestString = `SELECT DISTINCT ?wikiPageID ?labelArt ?labelArtist ?abstract ?labelMovement ?thumbnail ?completionDate ?locationLabel ?price
+  requestString = `SELECT DISTINCT ?wikiPageID ?labelArt ?wikiArtistID ?labelArtist ?abstract ?wikiMovementID ?labelMovement ?thumbnail ?completionDate ?locationLabel ?price
   WHERE {
    ?artwork a dbo:Artwork .
    ?artwork dbo:wikiPageID ?wikiPageID .
@@ -148,6 +147,7 @@ function getInfosOeuvre(idOeuvre){
    FILTER LANGMATCHES(LANG(?labelArt), "en").
   
    ?artwork dbo:author ?artist .
+   ?artist dbo:wikiPageID ?wikiArtistID .
    ?artist dbp:name ?name .
    ?artist dbo:abstract ?abstract .
    ?thing dbo:author ?artist .
@@ -161,6 +161,7 @@ function getInfosOeuvre(idOeuvre){
    }
   }
    ?movement rdfs:label ?labelMovement .
+   ?movement dbo:wikiPageID ?wikiMovementID .
    FILTER LANGMATCHES(LANG(?labelMovement), "en").
   
   
@@ -415,11 +416,7 @@ export async function getInfos(id,type){
   }else if(type === "oeuvre"){
     try {
       const resultat = await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
-      console.log("getInfosOeuvre(id)",getInfosOeuvre(id));
-      console.log("resultat",resultat);
-      const resultat2 = buildArtJson(resultat);
-      console.log("resultat2",resultat2);
-      return resultat2;
+      return buildArtJson(resultat);
     } catch (error) {
       return console.log("Erreur : " + error);
     }

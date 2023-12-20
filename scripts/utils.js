@@ -38,19 +38,22 @@ export const buildFullArtistJson = (
     return artistJson;
 };
 
-
-export const buildArtJson = (
-    artResult,
-) => {
+export const buildArtJson = (artResult) => {
     const art = artResult.results.bindings[0];
 
     const artJson = {
         wikiPageID: art.wikiPageID.value,
         thumbnail_url: art.thumbnail.value,
-        labelArt: art.labelArt.value,
-        labelArtist: art.labelArtist.value,
+        name: art.labelArt.value,
+        artist: {
+            id: art.wikiArtistID.value,
+            name: art.labelArtist.value,
+        },
         abstract: art.abstract.value,
-        labelMovement: art.labelMovement.value,
+        movement: {
+            id: art.wikiMovementID.value,
+            label: art.labelMovement.value,
+        },
         completionDate: art.completionDate.value,
         locationLabel: art.locationLabel.value,
         price: art.price?.value,
