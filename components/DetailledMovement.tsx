@@ -2,20 +2,15 @@ import React from 'react';
 import Image, { FALLBACK_IMAGE_URL } from './Image';
 import ImageWithFallback from './ImageWithFallback';
 
-const DetailledCard = ({
-    name,
-    picture,
-    year,
-    description,
-}) => (
-    <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col">
-        <h2 className="text-5xl font-bold mb-4 p-4">{name}</h2>
-        <div className="flex flex-col md:flex-row mb-4 py-2">
-            <div className="p-4 w-full h-full">
+const DetailledCard = ({ name, picture, year, description }) => (
+    <div className="flex flex-col rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="mb-4 p-4 text-5xl font-bold">{name}</h2>
+        <div className="mb-4 flex flex-col py-2 md:flex-row">
+            <div className="h-full w-full p-4">
                 <ImageWithFallback
                     alt={name}
                     src={picture}
-                    className="object-cover rounded-lg"
+                    className="rounded-lg object-cover"
                     fallback={
                         <Image src={FALLBACK_IMAGE_URL} alt={'fallback'} />
                     }
@@ -23,7 +18,7 @@ const DetailledCard = ({
             </div>
         </div>
         <div>
-            <p className="text-xl font-bold mr-2">Description:</p>
+            <p className="mr-2 text-xl font-bold">Description:</p>
             <p className="text-lg">{description}</p>
         </div>
     </div>

@@ -27,7 +27,6 @@ export default function DetailledArtist({
                         <div className={'flex flex-row flex-wrap'}>
                             {movements.map((movement, index) => {
                                 if (index !== movements.length - 1) {
-                                    console.log(movement);
                                     return (
                                         <Link
                                             key={index}
