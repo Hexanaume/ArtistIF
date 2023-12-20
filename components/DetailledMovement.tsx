@@ -46,7 +46,7 @@ const DetailledCard = ({
                     );
                 })}
             </div>
-            {/* <p className="mr-2 text-xl font-bold">Artists(s):</p>
+            <p className="mr-2 text-xl font-bold">Artists(s):</p>
             <div className={'flex flex-row flex-wrap'}>
                 {artists.map((artist, index) => {
                     return (
@@ -60,7 +60,7 @@ const DetailledCard = ({
                         />
                     );
                 })}
-            </div> */}
+            </div>
         </div>
     </div>
 );

@@ -92,7 +92,7 @@ export const buildMovementJson = (movementResult, resArtistes, resOeuvres) => {
     };
 
     movementJson.oeuvres = oeuvresJson;
-    movementJson.artistes = artistesJson;
+    movementJson.artists = artistesJson;
     console.log(movementJson);
     return movementJson;
 };
