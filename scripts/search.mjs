@@ -1,27 +1,43 @@
+<<<<<<< HEAD
 import { buildArtJson, buildFullArtistJson, buildMovementJson } from "./utils.js";
+=======
+import {
+    buildArtJson,
+    buildFullArtistJson,
+    buildMovementJson,
+} from './utils.js';
+>>>>>>> feat/movementDetails
 
 function addDbpediaPrefixes(requestString) {
-  // append the prefixes to the request string
-  const prefixes = 'PREFIX owl: <http://www.w3.org/2002/07/owl#> \n' +
-    'PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n' +
-    'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n' +
-    'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n' +
-    'PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n' +
-    'PREFIX dc: <http://purl.org/dc/elements/1.1/> \n' +
-    'PREFIX : <http://dbpedia.org/resource/> \n' +
-    'PREFIX dbpedia2: <http://dbpedia.org/property/> \n' +
-    'PREFIX dbpedia: <http://dbpedia.org/> \n' +
-    'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n' +
-    'PREFIX dcterms: <http://purl.org/dc/terms/> \n\n';
+    // append the prefixes to the request string
+    const prefixes =
+        'PREFIX owl: <http://www.w3.org/2002/07/owl#> \n' +
+        'PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> \n' +
+        'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n' +
+        'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n' +
+        'PREFIX foaf: <http://xmlns.com/foaf/0.1/> \n' +
+        'PREFIX dc: <http://purl.org/dc/elements/1.1/> \n' +
+        'PREFIX : <http://dbpedia.org/resource/> \n' +
+        'PREFIX dbpedia2: <http://dbpedia.org/property/> \n' +
+        'PREFIX dbpedia: <http://dbpedia.org/> \n' +
+        'PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n' +
+        'PREFIX dcterms: <http://purl.org/dc/terms/> \n\n';
 
-  return prefixes + requestString;
+    return prefixes + requestString;
 }
 
+<<<<<<< HEAD
 function requestArtists(NomArtists){
   let requestString;
   requestString = `
     SELECT distinct ?type ?wikiPageID ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
    BIND("artists" AS ?type)
+=======
+function requestArtists(NomArtists) {
+    let requestString;
+    requestString = `
+    SELECT distinct ?wikiPageID ?artist ?picture ?name (GROUP_CONCAT( DISTINCT ?labelMovement; separator=', ') as ?movements) ?abstract WHERE {
+>>>>>>> feat/movementDetails
    ?artist a foaf:Person .
    ?artist dbo:wikiPageID ?wikiPageID .
    {
@@ -57,9 +73,10 @@ function requestArtists(NomArtists){
  LIMIT 30
 `;
 
-  return requestString;
+    return requestString;
 }
 
+<<<<<<< HEAD
 function requestAll(inputString){
   let requestString;
   requestString = `
@@ -163,6 +180,13 @@ function requestInfosArtists(idArtist)
 {
   let requestString;
   requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract ?thumbnail
+=======
+function requestInfosArtists(idArtist) {
+    // gets the information about an artist from its id
+    // useful for the artist page
+    let requestString;
+    requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract ?thumbnail
+>>>>>>> feat/movementDetails
 WHERE {
  ?artist a foaf:Person .
  ?artist dbo:wikiPageID ?wikiPageID .
@@ -195,12 +219,18 @@ WHERE {
 LIMIT 1
 `;
 
-  return requestString;
+    return requestString;
 }
 
+<<<<<<< HEAD
 function requestOeuvres(NomOeuvres){
   let requestString;
   requestString = `SELECT ?type ?wikiPageID ?artwork ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
+=======
+function requestOeuvres(NomOeuvres) {
+    let requestString;
+    requestString = `SELECT ?wikiPageID ?artwork ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
+>>>>>>> feat/movementDetails
 WHERE {
   BIND("oeuvres" AS ?type)
  ?artwork a dbo:Artwork.
@@ -232,12 +262,12 @@ UNION
 GROUP BY ?type ?wikiPageID ?artwork ?size ?name ?abstract ?picture
 LIMIT 30
   `;
-  return requestString;
+    return requestString;
 }
 
-function getInfosOeuvre(idOeuvre){
-  let requestString;
-  requestString = `SELECT DISTINCT ?wikiPageID ?labelArt ?wikiArtistID ?labelArtist ?abstract ?wikiMovementID ?labelMovement ?thumbnail ?completionDate ?locationLabel ?price
+function getInfosOeuvre(idOeuvre) {
+    let requestString;
+    requestString = `SELECT DISTINCT ?wikiPageID ?labelArt ?wikiArtistID ?labelArtist ?abstract ?wikiMovementID ?labelMovement ?thumbnail ?completionDate ?locationLabel ?price
   WHERE {
    ?artwork a dbo:Artwork .
    ?artwork dbo:wikiPageID ?wikiPageID .
@@ -295,12 +325,12 @@ function getInfosOeuvre(idOeuvre){
   }
   LIMIT 1
   `;
-  return requestString;
+    return requestString;
 }
 
-function requestOeuvresArtiste(idArtist){
-  let requestString;
-  requestString = `SELECT DISTINCT ?wikiPageID ?artistLabel ?artworkLabel ?artwork ?abstract ?thumbnail ?year ?locationLabel ?location
+function requestOeuvresArtiste(idArtist) {
+    let requestString;
+    requestString = `SELECT DISTINCT ?wikiPageID ?artistLabel ?artworkLabel ?artwork ?abstract ?thumbnail ?year ?locationLabel ?location
 WHERE {
   ?artwork a dbo:Artwork .
   ?artist a foaf:Person .
@@ -337,12 +367,18 @@ WHERE {
   FILTER LANGMATCHES(LANG(?artworkLabel), "en").
 }
   `;
-  return requestString;
+    return requestString;
 }
 
+<<<<<<< HEAD
 function requestMouvements(NomMouvements){
   let requestString;
   requestString = `SELECT DISTINCT ?type ?name ?movement ?wikiPageID ?picture ?abstract
+=======
+function requestMouvements(NomMouvements) {
+    let requestString;
+    requestString = `SELECT DISTINCT ?name ?movement ?wikiPageID ?picture ?abstract
+>>>>>>> feat/movementDetails
 WHERE {
 BIND("mouvement" AS ?type)
   {
@@ -365,11 +401,11 @@ FILTER regex(?name, "${NomMouvements}", "i").
 }
 LIMIT 20
   `;
-  return requestString;
+    return requestString;
 }
-function requestMouvementsArtiste(idArtist){
-  let requestString;
-  requestString = `SELECT DISTINCT ?labelMovement ?movement ?movementWikiPageID
+function requestMouvementsArtiste(idArtist) {
+    let requestString;
+    requestString = `SELECT DISTINCT ?labelMovement ?movement ?movementWikiPageID
 WHERE {
   ?artist a foaf:Person .
   ?artist dbo:wikiPageID ?wikiPageID .
@@ -391,11 +427,11 @@ WHERE {
 }
 LIMIT 10
   `;
-  return requestString;
+    return requestString;
 }
-function getInfosMouvement(idMouvement){
-  let requestString;
-  requestString = `SELECT DISTINCT ?labelMovement ?movement ?id ?pic ?desc
+function getInfosMouvement(idMouvement) {
+    let requestString;
+    requestString = `SELECT DISTINCT ?labelMovement ?movement ?id ?pic ?desc
 WHERE {
 
 ?movement rdfs:label ?labelMovement .
@@ -410,12 +446,12 @@ FILTER LANGMATCHES(LANG(?desc), "en").
 }
 LIMIT 1
   `;
-  return requestString;
+    return requestString;
 }
 
-function getArtistesMouvement(idMouvement){
-  let requestString;
-  requestString = `SELECT DISTINCT ?artist ?name ?size
+function getArtistesMouvement(idMouvement) {
+    let requestString;
+    requestString = `SELECT DISTINCT ?wikiPageID ?artist ?name ?size ?abstract ?thumbnail
 WHERE {
 ?artist a foaf:Person.
 {
@@ -425,22 +461,27 @@ UNION
  {
 ?artist dbp:movement ?movement.
 }
+?artist dbo:wikiPageID ?wikiPageID.
+?artist dbo:abstract ?abstract.
+?artist dbo:thumbnail ?thumbnail.
 
 ?movement dbo:wikiPageID ?id.
 ?artist dbp:name ?name.
 ?artist dbo:wikiPageLength ?size.
 FILTER(?id=${idMouvement}).
  FILTER LANGMATCHES(LANG(?name), "en").
+ FILTER LANGMATCHES(LANG(?abstract), "en").
+
 }
 ORDER BY DESC(?size)
 LIMIT 20
   `;
-  return requestString;
+    return requestString;
 }
 
-function getOeuvresMouvement(idMouvement){
-  let requestString;
-  requestString = `SELECT DISTINCT ?artwork?name ?size
+function getOeuvresMouvement(idMouvement) {
+    let requestString;
+    requestString = `SELECT DISTINCT ?artwork ?name ?size ?abstract ?thumbnail ?wikiPageID
 WHERE {
 
 ?artwork a dbo:Artwork .
@@ -448,10 +489,18 @@ WHERE {
  {
 ?artwork dbp:movement ?movement.
 }
+
+?artwork dbo:abstract ?abstract.
+?artwork dbo:thumbnail ?thumbnail.
+
+
 ?movement dbo:wikiPageID ?id.
+?artwork dbo:wikiPageID ?wikiPageID.
+
 ?artwork rdfs:label ?name.
 FILTER langMatches(lang(?name), "en").
 FILTER (?id=${idMouvement}).
+FILTER langMatches(lang(?abstract), "en").
 
 ?artwork dbo:wikiPageLength ?size.
 
@@ -460,12 +509,23 @@ FILTER (?id=${idMouvement}).
 ORDER BY DESC(?size)
 LIMIT 20
   `;
-  return requestString;
+    return requestString;
 }
 
+export async function rechercher(inputString, type) {
+    // Ajout des préfixes
+    let requestString;
+    if (type === 'artist') {
+        requestString = addDbpediaPrefixes(requestArtists(inputString));
+    } else if (type === 'oeuvre') {
+        requestString = addDbpediaPrefixes(requestOeuvres(inputString));
+    } else if (type === 'mouvement') {
+        requestString = addDbpediaPrefixes(requestMouvements(inputString));
+    }
 
-export async function rechercher(inputString,type) {
+    console.log('requestString', requestString);
 
+<<<<<<< HEAD
   // Ajout des préfixes
   let requestString;
   if(type === "all"){
@@ -491,8 +551,24 @@ export async function rechercher(inputString,type) {
   } catch (error) {
     return console.log("Erreur : " + error);
   }
+=======
+    const url =
+        'https://dbpedia.org/sparql?query=' +
+        encodeURIComponent(requestString) +
+        '&format=json';
+    //console.log(url);
+>>>>>>> feat/movementDetails
 
+    try {
+        const response = await fetch(url);
+        const responseJson = await response.json();
+        console.log(responseJson.results.bindings);
+        return responseJson.results.bindings;
+    } catch (error) {
+        return console.log('Erreur : ' + error);
+    }
 }
+<<<<<<< HEAD
 export async function getInfos(id,type){
   // Ajout des préfixes
   let requestString;
@@ -502,12 +578,56 @@ export async function getInfos(id,type){
       const resInfos = await callAPI(addDbpediaPrefixes(requestInfosArtists(id)));
       const resOeuvres = await callAPI(addDbpediaPrefixes(requestOeuvresArtiste(id)));
       const resMouvements = await callAPI(addDbpediaPrefixes(requestMouvementsArtiste(id)));
+=======
+export async function getInfos(id, type) {
+    // Ajout des préfixes
+    let requestString;
+    if (type === 'artist') {
+        try {
+            const resInfos = await callAPI(
+                addDbpediaPrefixes(requestInfosArtists(id)),
+            );
+            const resOeuvres = await callAPI(
+                addDbpediaPrefixes(requestOeuvresArtiste(id)),
+            );
+            const resMouvements = await callAPI(
+                addDbpediaPrefixes(requestMouvementsArtiste(id)),
+            );
+>>>>>>> feat/movementDetails
 
-      // add the artist info to the artist object
-      return buildFullArtistJson(resInfos, resMouvements, resOeuvres);
-    } catch (error) {
-      return console.log("Erreur : " + error);
+            // add the artist info to the artist object
+            return buildFullArtistJson(resInfos, resMouvements, resOeuvres);
+        } catch (error) {
+            return console.log('Erreur : ' + error);
+        }
+    } else if (type === 'oeuvre') {
+        try {
+            const resultat = await callAPI(
+                addDbpediaPrefixes(getInfosOeuvre(id)),
+            );
+            return buildArtJson(resultat);
+        } catch (error) {
+            return console.log('Erreur : ' + error);
+        }
+    } else if (type === 'mouvement') {
+        try {
+            const resInfos = await callAPI(
+                addDbpediaPrefixes(getInfosMouvement(id)),
+            );
+            const resArtistes = await callAPI(
+                addDbpediaPrefixes(getArtistesMouvement(id)),
+            );
+            const resOeuvres = await callAPI(
+                addDbpediaPrefixes(getOeuvresMouvement(id)),
+            );
+            const res = buildMovementJson(resInfos, resArtistes, resOeuvres);
+            //console.log('res', res);
+            return res;
+        } catch (error) {
+            return console.log('Erreur : ' + error);
+        }
     }
+<<<<<<< HEAD
 
   }else if(type === "oeuvre"){
     try {
@@ -528,15 +648,20 @@ export async function getInfos(id,type){
 
   }
 
+=======
+>>>>>>> feat/movementDetails
 }
 
 async function callAPI(requestString) {
-  const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(requestString) + "&format=json";
+    const url =
+        'https://dbpedia.org/sparql?query=' +
+        encodeURIComponent(requestString) +
+        '&format=json';
 
-  try {
-    const response = await fetch(url);
-    return await response.json();
-  } catch (error) {
-    return console.log("Erreur : " + error);
-  }
+    try {
+        const response = await fetch(url);
+        return await response.json();
+    } catch (error) {
+        return console.log('Erreur : ' + error);
+    }
 }

@@ -61,20 +61,41 @@ export const buildArtJson = (artResult) => {
     return artJson;
 };
 
-
-export const buildMovementJson = (movementResult) => {
+export const buildMovementJson = (movementResult, resArtistes, resOeuvres) => {
     const movement = movementResult.results.bindings[0];
+    const artistList = resArtistes.results.bindings;
+    const oeuvres = resOeuvres.results.bindings;
+
+    const oeuvresJson = oeuvres.map((oeuvre) => {
+        return {
+            wikiPageID: oeuvre.wikiPageID.value,
+            name: oeuvre.name.value,
+            abstract: oeuvre.abstract.value,
+            thumbnail_url: !oeuvre.thumbnail ? null : oeuvre.thumbnail.value,
+        };
+    });
+    const artistesJson = artistList.map((artist) => {
+        return {
+            wikiPageID: artist.wikiPageID.value,
+            name: artist.name.value,
+            abstract: artist.abstract.value,
+            thumbnail_url: artist.thumbnail.value,
+        };
+    });
 
     const movementJson = {
         labelMovement: movement.labelMovement.value,
         movement: movement.movement.value,
-        id:movement.id.value,
-        pic:movement.pic.value,
-        desc:movement.desc.value,
+        id: movement.id.value,
+        pic: movement.pic.value,
+        desc: movement.desc.value,
     };
+
+    movementJson.oeuvres = oeuvresJson;
+    movementJson.artists = artistesJson;
+    console.log(movementJson);
     return movementJson;
 };
-
 
 export function truncateText(text, maxLength) {
     if (text.length > maxLength) {
