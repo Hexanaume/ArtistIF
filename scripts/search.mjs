@@ -299,14 +299,6 @@ function getInfosMouvement(idMouvement){
   requestString = `SELECT DISTINCT ?labelMovement ?movement ?id ?pic ?desc
 WHERE {
 
-  {
-   ?e dbo:movement ?movement .
- }
- UNION
- {
-   ?e dbp:movement ?movement .
- }
-
 ?movement rdfs:label ?labelMovement .
 ?movement dbo:wikiPageID ?id.
 ?movement dbo:abstract ?desc.
@@ -428,7 +420,7 @@ export async function getInfos(id,type){
       const resInfos = await callAPI(addDbpediaPrefixes(getInfosMouvement(id)));
       const resArtistes = await callAPI(addDbpediaPrefixes(getArtistesMouvement(id)));
       const resOeuvres = await callAPI(addDbpediaPrefixes(getOeuvresMouvement(id)));
-      return Object.assign({}, resInfos, resArtistes, resOeuvres);
+      return resInfos;
     } catch (error) {
       return console.log("Erreur : " + error);
     }

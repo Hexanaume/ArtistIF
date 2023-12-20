@@ -61,6 +61,21 @@ export const buildArtJson = (artResult) => {
     return artJson;
 };
 
+
+export const buildMovementJson = (movementResult) => {
+    const movement = movementResult.results.bindings[0];
+
+    const movementJson = {
+        labelMovement: movement.labelMovement.value,
+        movement: movement.movement.value,
+        id:movement.id.value,
+        pic:movement.pic.value,
+        desc:movement.desc.value,
+    };
+    return movementJson;
+};
+
+
 export function truncateText(text, maxLength) {
     if (text.length > maxLength) {
         return text.substring(0, maxLength - 3) + '...';
