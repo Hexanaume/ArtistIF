@@ -52,18 +52,15 @@ export default function Home() {
                 >
                     <div className="mb-6 flex flex-row justify-center space-x-16">
                         <SearchTypeCard
-                          type="all"
-                          label="All"
-                          icon="/static/images/icons/artist.png"
-                          onSelect={() =>
-                            handleCardSelection(
-                              'rechercherAll',
-                              'all',
-                            )
-                          }
-                          cardName="rechercherAll"
-                          selectedCard={selectedCard}
-                          selectedCardType={selectedCardType}
+                            type="all"
+                            label="All"
+                            icon="/static/images/icons/all.png"
+                            onSelect={() =>
+                                handleCardSelection('rechercherAll', 'all')
+                            }
+                            cardName="rechercherAll"
+                            selectedCard={selectedCard}
+                            selectedCardType={selectedCardType}
                         />
                         <SearchTypeCard
                             type="artists"
