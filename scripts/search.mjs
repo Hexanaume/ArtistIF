@@ -117,6 +117,8 @@ UNION
 ?artwork dbp:movement ?movement.
 }
 }
+ ?artwork dbo:author ?artist.
+ ?artist a foaf:Person.
  ?artwork dbo:wikiPageLength ?size.
  ?artwork rdfs:label ?name.
  ?artwork dbo:abstract ?abstract.
@@ -149,9 +151,9 @@ function getInfosOeuvre(idOeuvre){
   
    ?artwork dbo:author ?artist .
    ?artist dbo:wikiPageID ?wikiArtistID .
-   ?artist dbp:name ?name .
+   ?artist rdfs:label ?labelArtist.
    ?artist dbo:abstract ?abstract .
-   ?thing dbo:author ?artist .
+  
   OPTIONAL{
    {
      ?artist dbo:movement ?movement .
@@ -160,10 +162,10 @@ function getInfosOeuvre(idOeuvre){
    {
      ?artist dbp:movement ?movement .
    }
-  }
    ?movement rdfs:label ?labelMovement .
    ?movement dbo:wikiPageID ?wikiMovementID .
    FILTER LANGMATCHES(LANG(?labelMovement), "en").
+  }
   
   
    OPTIONAL {
@@ -188,11 +190,9 @@ function getInfosOeuvre(idOeuvre){
    }
   
   
-   # Convert name into string
-   BIND(STR(?name) AS ?labelArtist)
     
    # Filter for English names and abstracts
-   FILTER LANGMATCHES(LANG(?name), "en").
+   FILTER LANGMATCHES(LANG(?labelArtist), "en").
    FILTER LANGMATCHES(LANG(?abstract), "en").
   }
   LIMIT 1
@@ -411,6 +411,7 @@ export async function getInfos(id,type){
     try {
       console.log(getInfosOeuvre(id));
       const resultat = await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
+      console.log(resultat.results.bindings);
       return buildArtJson(resultat);
     } catch (error) {
       return console.log("Erreur : " + error);

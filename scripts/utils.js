@@ -51,11 +51,11 @@ export const buildArtJson = (artResult) => {
         },
         abstract: art.abstract.value,
         movement: {
-            id: art.wikiMovementID.value,
-            label: art.labelMovement.value,
+            id: art.wikiMovementID?.value,
+            label: art.labelMovement?.value,
         },
-        completionDate: art.completionDate.value,
-        locationLabel: art.locationLabel.value,
+        completionDate: art.completionDate?.value,
+        locationLabel: art.locationLabel?.value,
         price: art.price?.value,
     };
     return artJson;
