@@ -12,7 +12,7 @@ export default function DetailledCard({
     description,
 }) {
     return (
-        <div className="flex flex-col rounded-lg bg-white p-6 shadow-lg">
+        <div className="flex flex-col rounded-lg p-6 shadow-lg">
             <div className={'flex flex-row justify-between'}>
                 <h2 className="mb-4 p-4 text-5xl font-bold">{name}</h2>
                 <div
