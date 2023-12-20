@@ -117,6 +117,8 @@ UNION
 ?artwork dbp:movement ?movement.
 }
 }
+ ?artwork dbo:author ?artist.
+ ?artist a foaf:Person.
  ?artwork dbo:wikiPageLength ?size.
  ?artwork rdfs:label ?name.
  ?artwork dbo:abstract ?abstract.
