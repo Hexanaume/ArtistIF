@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import DetailedArt from '@/components/DetailledArt';
 
 type ArtDetailsProps = {
-    labelArt: any;
+    labelArt: never;
     labelArtist: string;
     abstract: string;
     labelMovement: string;
@@ -39,14 +39,14 @@ export default function ArtDetails({ params }) {
     return (
         <>
             {artDetails && (
-                <DetailledArt 
-                    name={artDetails.labelArt} 
-                    author={artDetails.labelArtist} 
+                <DetailledArt
+                    name={artDetails.labelArt}
+                    author={artDetails.labelArtist}
                     description={artDetails.abstract}
-                    movement={artDetails.labelMovement} 
-                    imgSrc={artDetails.thumbnail_url} 
-                    date={artDetails.completionDate} 
-                    location={artDetails.locationLabel.value} 
+                    movement={artDetails.labelMovement}
+                    imgSrc={artDetails.thumbnail_url}
+                    date={artDetails.completionDate}
+                    location={artDetails.locationLabel}
                     price={artDetails.price}
                 />
             )}
