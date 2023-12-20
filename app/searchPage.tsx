@@ -6,6 +6,7 @@ import { useState } from 'react';
 import SearchTypeCard from '@/components/SearchTypeCard';
 import { useArtistUrl } from '@/components/UrlContext';
 import { useRouter } from 'next/router';
+import { truncateText } from '../scripts/utils';
 
 const MAX_DISPLAY = 5;
 
@@ -18,13 +19,6 @@ export default function Home() {
         setSearchResults(results);
     };
 
-    function truncateText(text, maxLength) {
-        if (text.length > maxLength) {
-            return text.substring(0, maxLength - 3) + '...';
-        } else {
-            return text;
-        }
-    }
     const handleCardSelection = (label, type) => {
         console.log('label: ' + label, 'type: ' + type);
         setSelectedCard(label);

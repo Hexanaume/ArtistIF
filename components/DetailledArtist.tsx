@@ -2,6 +2,7 @@ import React from 'react';
 import Image, { FALLBACK_IMAGE_URL } from './Image';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import Card from '@/components/Card';
+import { truncateText } from '../scripts/utils';
 
 export default function DetailledCard({
     name,
@@ -62,25 +63,28 @@ export default function DetailledCard({
                 </div>
             </div>
             <div>
+                <p className="mr-2 text-xl font-bold">Description:</p>
+                <p className="text-lg">{description}</p>
+            </div>
+            <div>
                 <p className="mr-2 text-xl font-bold">Artwork(s):</p>
                 <div className={'flex flex-row flex-wrap'}>
                     {artworks.map((artwork, index) => {
                         return (
                             <Card
                                 key={index}
-                                type={'oeuvre'}
+                                type={'oeuvres'}
                                 wikiID={artwork.wikiPageID}
                                 title={artwork.name}
-                                description={artwork.abstract}
+                                description={truncateText(
+                                    artwork.abstract,
+                                    144,
+                                )}
                                 imgSrc={artwork.thumbnail_url}
                             />
                         );
                     })}
                 </div>
-            </div>
-            <div>
-                <p className="mr-2 text-xl font-bold">Description:</p>
-                <p className="text-lg">{description}</p>
             </div>
         </div>
     );

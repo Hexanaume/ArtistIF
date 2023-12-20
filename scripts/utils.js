@@ -32,9 +32,16 @@ export const buildFullArtistJson = (
         };
     });
 
-
     artistJson.movements = movements;
     artistJson.oeuvres = oeuvresJson;
 
     return artistJson;
 };
+
+export function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength - 3) + '...';
+    } else {
+        return text;
+    }
+}
