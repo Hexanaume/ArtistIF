@@ -34,18 +34,20 @@ export default function DetailledArtist({
                                             href={`/mouvement/${movement.wikiPageID}`}
                                         >
                                             <span className="text-lg">
-                                                {movement.label}
+                                                {movement.label + ', '}
                                             </span>
                                         </Link>
                                     );
                                 } else {
                                     return (
-                                        <span
+                                        <Link
                                             key={index}
-                                            className="mr-2 text-lg"
+                                            href={`/mouvement/${movement.wikiPageID}`}
                                         >
-                                            {`${movement.label}`}
-                                        </span>
+                                            <span className="text-lg">
+                                                {movement.label}
+                                            </span>
+                                        </Link>
                                     );
                                 }
                             })}
