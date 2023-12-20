@@ -21,12 +21,6 @@ const DetailledCard = ({
                     }
                 />
             </div>
-            <div className="md:w-1/2 md:ml-4 flex flex-col p-8 px-2 -mt-2 gap-2">
-                <div className="mb-2 flex">
-                    <span className="text-xl font-bold mr-2">Year:</span>
-                    <span className="text-lg">{year}</span>
-                </div>
-            </div>
         </div>
         <div>
             <p className="text-xl font-bold mr-2">Description:</p>
