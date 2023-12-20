@@ -40,6 +40,7 @@ function requestArtists(NomArtists){
    ?artist dbp:name ?name .
    ?artist dbo:abstract ?abstract .
    ?thing dbo:author ?artist .
+   ?thing a dbo:Artwork .
 
    ?artist dbo:thumbnail ?picture .
 
@@ -102,25 +103,25 @@ LIMIT 1
 
 function requestOeuvres(NomOeuvres){
   let requestString;
-  requestString = `SELECT ?wikiPageID ?artist ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
+  requestString = `SELECT ?wikiPageID ?artwork ?size ?name ?abstract (GROUP_CONCAT(?author; separator=",") as ?authors) ?picture (GROUP_CONCAT(?movement; separator=",") as ?movements)
 WHERE {
- ?artist a dbo:Artwork.
- ?artist dbo:wikiPageID ?wikiPageID
+ ?artwork a dbo:Artwork.
+ ?artwork dbo:wikiPageID ?wikiPageID.
 
  OPTIONAL{
 {
-?artist dbo:movement ?movement.
+?artwork dbo:movement ?movement.
 }
 UNION
  {
-?artist dbp:movement ?movement.
+?artwork dbp:movement ?movement.
 }
 }
- ?artist dbo:wikiPageLength ?size.
- ?artist rdfs:label ?name.
- ?artist dbo:abstract ?abstract.
- ?artist dbo:thumbnail ?picture
- OPTIONAL {?artist dbo:author ?author.}
+ ?artwork dbo:wikiPageLength ?size.
+ ?artwork rdfs:label ?name.
+ ?artwork dbo:abstract ?abstract.
+ ?artwork dbo:thumbnail ?picture
+ OPTIONAL {?artwork dbo:author ?author.}
   FILTER langMatches(lang(?abstract), "en").
  FILTER langMatches(lang(?name), "en").
 
@@ -128,7 +129,7 @@ UNION
   FILTER regex(?name, "${NomOeuvres}", "i").
 
 }
-GROUP BY ?wikiPageID ?artist ?size ?name ?abstract ?picture
+GROUP BY ?wikiPageID ?artwork ?size ?name ?abstract ?picture
 LIMIT 30
   `;
   return requestString;
@@ -143,7 +144,7 @@ function getInfosOeuvre(idOeuvre){
    
    FILTER (?wikiPageID = ${idOeuvre}).
   
-   ?artwork dbp:title ?labelArt
+   ?artwork rdfs:label ?labelArt
    FILTER LANGMATCHES(LANG(?labelArt), "en").
   
    ?artwork dbo:author ?artist .
@@ -203,6 +204,7 @@ function requestOeuvresArtiste(idArtist){
   let requestString;
   requestString = `SELECT DISTINCT ?wikiPageID ?artistLabel ?artworkLabel ?artwork ?abstract ?thumbnail ?year ?locationLabel ?location
 WHERE {
+  ?artwork a dbo:Artwork .
   ?artist a foaf:Person .
   ?artist dbo:wikiPageID ?wikiPageIDArtist .
   FILTER (?wikiPageIDArtist = ${idArtist}).
@@ -415,6 +417,7 @@ export async function getInfos(id,type){
 
   }else if(type === "oeuvre"){
     try {
+      console.log(getInfosOeuvre(id));
       const resultat = await callAPI(addDbpediaPrefixes(getInfosOeuvre(id)));
       return buildArtJson(resultat);
     } catch (error) {
