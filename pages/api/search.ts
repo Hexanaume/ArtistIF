@@ -6,10 +6,7 @@ export default async function handler(req, res) {
     const type = req.query.type;
     if (type == 'rechercherArtists') {
         try {
-            // On recherche les résultats correspondant à la requête de l'utilisateur
-
             const results = await rechercher(q, 'artist');
-            // On renvoie les résultats
             res.status(200).json(results);
         } catch (e) {
             res.status(500).json({ error: e.message });
@@ -17,7 +14,6 @@ export default async function handler(req, res) {
     } else if (type == 'getInfosArtist') {
         try {
             const results = await getInfos(q, 'artist');
-            // On renvoie les résultats
             res.status(200).json(results);
         } catch (e) {
             res.status(500).json({ error: e.message });
@@ -32,16 +28,14 @@ export default async function handler(req, res) {
     } else if (type == 'getInfosOeuvre') {
         try {
             const results = await getInfos(q, 'oeuvre');
+            //console.log(results);
             res.status(200).json(results);
         } catch (e) {
             res.status(500).json({ error: e.message });
         }
     } else if (type == 'rechercherMouvements') {
         try {
-            // On recherche les résultats correspondant à la requête de l'utilisateur
-
             const results = await rechercher(q, 'mouvement');
-            // On renvoie les résultats
             res.status(200).json(results);
         } catch (e) {
             res.status(500).json({ error: e.message });

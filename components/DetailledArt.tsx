@@ -1,5 +1,6 @@
 import React from 'react';
-import Image from './Image';
+import Image, { FALLBACK_IMAGE_URL } from './Image';
+import ImageWithFallback from './ImageWithFallback';
 
 const DetailedArt = ({
     name,
@@ -11,14 +12,17 @@ const DetailedArt = ({
     price,
     description,
 }) => (
-    <div className="flex flex-col rounded-lg bg-white p-6 shadow-lg">
-        <h2 className="mb-4 p-4 text-5xl font-bold">{name}</h2>
-        <div className="mb-4 flex flex-col py-2 md:flex-row">
-            <div className="h-full w-full p-4">
-                <Image
+    <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col">
+        <h2 className="text-5xl font-bold mb-4 p-4">{name}</h2>
+        <div className="flex flex-col md:flex-row mb-4 py-2">
+            <div className="p-4 w-full h-full">
+            <ImageWithFallback
                     alt={name}
                     src={imgSrc}
-                    className="rounded-lg object-cover"
+                    className="object-cover rounded-lg"
+                    fallback={
+                        <Image src={FALLBACK_IMAGE_URL} alt={'fallback'} />
+                    }
                 />
             </div>
             <div className="-mt-2 flex flex-col gap-2 p-8 px-2 md:ml-4 md:w-1/2">

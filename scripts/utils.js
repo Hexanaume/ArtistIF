@@ -38,6 +38,26 @@ export const buildFullArtistJson = (
     return artistJson;
 };
 
+
+export const buildArtJson = (
+    artResult,
+) => {
+    const art = artResult.results.bindings[0];
+
+    const artJson = {
+        wikiPageID: art.wikiPageID.value,
+        thumbnail_url: art.thumbnail.value,
+        labelArt: art.labelArt.value,
+        labelArtist: art.labelArtist.value,
+        abstract: art.abstract.value,
+        labelMovement: art.labelMovement.value,
+        completionDate: art.completionDate.value,
+        locationLabel: art.locationLabel.value,
+        price: art.price?.value,
+    };
+    return artJson;
+};
+
 export function truncateText(text, maxLength) {
     if (text.length > maxLength) {
         return text.substring(0, maxLength - 3) + '...';
