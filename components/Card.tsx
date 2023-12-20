@@ -94,7 +94,7 @@ const Card = ({ type, wikiID, title, description, imgSrc }) => {
                         >
                             <img
                                 className="h-12 w-12"
-                                src={`static/images/icons/${type}.png`}
+                                src={`/static/images/icons/${type}.png`}
                                 alt={'type of result'}
                             />
                             <h2 className="text-2xl font-bold leading-8 tracking-tight">
