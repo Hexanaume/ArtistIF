@@ -41,7 +41,7 @@ export default async function handler(req, res) {
         }
     } else if (type == 'getInfosMouvement') {
         try {
-            console.log("idd",q);
+            console.log('id : ', q);
             const results = await getInfos(q, 'mouvement');
             res.status(200).json(results);
         } catch (e) {
