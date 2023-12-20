@@ -93,7 +93,7 @@ const Card = ({ type, wikiID, title, description, imgSrc }) => {
                             }
                         >
                             <img
-                                className="h-12 w-12"
+                                className="h-14 w-14"
                                 src={`/static/images/icons/${type}.png`}
                                 alt={'type of result'}
                             />
