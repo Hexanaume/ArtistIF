@@ -62,12 +62,12 @@ export interface SearchResult {
 }
 const Card = ({ type, wikiID, title, description, imgSrc }) => {
     return (
-        <div className="md max-w-[544px] p-4 md:w-1/2">
+        <div className="md max-w-[544px] p-4 md:w-1/2 ">
             <Link href={`/${type}/${wikiID}`} passHref>
                 <div
                     className={`${
                         imgSrc && 'h-full'
-                    }  overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60 dark:border-gray-700`}
+                    }  overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60 dark:border-gray-700 `}
                 >
                     <div className="p-0">
                         <ImageWithFallback
@@ -97,7 +97,7 @@ const Card = ({ type, wikiID, title, description, imgSrc }) => {
                                 src={`/static/images/icons/${type}.png`}
                                 alt={'type of result'}
                             />
-                            <h2 className="text-2xl font-bold leading-8 tracking-tight">
+                            <h2 className="text-2xl font-bold leading-8 tracking-tight hover:text-pink-500 hover:underline">
                                 {title}
                             </h2>
                         </div>

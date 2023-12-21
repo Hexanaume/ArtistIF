@@ -32,7 +32,7 @@ export default function DetailledArtist({
                                             key={index}
                                             href={`/mouvement/${movement.wikiPageID}`}
                                         >
-                                            <span className="text-lg">
+                                            <span className="text-lg hover:text-pink-500 hover:underline">
                                                 {movement.label + ', '}
                                             </span>
                                         </Link>
@@ -43,7 +43,7 @@ export default function DetailledArtist({
                                             key={index}
                                             href={`/mouvement/${movement.wikiPageID}`}
                                         >
-                                            <span className="text-lg">
+                                            <span className="text-lg hover:text-pink-500 hover:underline">
                                                 {movement.label}
                                             </span>
                                         </Link>

@@ -30,7 +30,7 @@ const DetailedArt = ({
                 <div className="mb-2 flex">
                     <span className="mr-2 text-xl font-bold">Artist:</span>
                     <Link href={`/artists/${artist.id}`}>
-                        <span className="text-lg">{artist.name}</span>
+                        <span className="text-lg hover:text-pink-500 hover:underline">{artist.name}</span>
                     </Link>
                 </div>
                 <div className="mb-2 flex">
@@ -42,7 +42,7 @@ const DetailedArt = ({
                         Art Movement:
                     </span>
                     <Link href={`/mouvement/${movement.id}`}>
-                        <span className="text-lg">{movement.label}</span>
+                        <span className="text-lg hover:text-pink-500 hover:underline">{movement.label}</span>
                     </Link>
                 </div>
                 <div className="mb-2 flex">

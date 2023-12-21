@@ -7,7 +7,6 @@ import { truncateText } from '../scripts/utils';
 const DetailledCard = ({
     name,
     picture,
-    year,
     description,
     oeuvres,
     artists,
