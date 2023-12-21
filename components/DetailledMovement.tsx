@@ -11,7 +11,7 @@ const DetailledCard = ({
     oeuvres,
     artists,
 }) => (
-    <div className="flex flex-col rounded-lg bg-white p-6 shadow-lg">
+    <div className="flex flex-col rounded-lg p-6 shadow-lg">
         <h2 className="mb-4 p-4 text-5xl font-bold">{name}</h2>
         <div className="mb-4 flex flex-col py-2 md:flex-row">
             <div className="h-full w-full p-4">
