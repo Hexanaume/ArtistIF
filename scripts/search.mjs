@@ -1,8 +1,4 @@
-import {
-    buildArtJson,
-    buildFullArtistJson,
-    buildMovementJson,
-} from './utils.js';
+import { buildArtJson, buildFullArtistJson, buildMovementJson } from "./utils.js";
 
 function addDbpediaPrefixes(requestString) {
     // append the prefixes to the request string
@@ -88,7 +84,7 @@ WHERE {
 
         FILTER LANGMATCHES(LANG(?name), "en").
         FILTER LANGMATCHES(LANG(?abstract), "en").
-        FILTER regex(?name, "ren", "i").
+        FILTER regex(?name, "${inputString}", "i").
     }
     UNION
     {
@@ -116,7 +112,7 @@ WHERE {
         FILTER langMatches(lang(?name), "en").
 
 
-        FILTER regex(?name, "ren", "i").
+        FILTER regex(?name, "${inputString}", "i").
 
     }
     UNION
@@ -151,7 +147,7 @@ WHERE {
         #filtrer pour avoir seulement des noms en anglais
         filter langMatches(lang(?nameArtist),"en").
         filter langMatches(lang(?abstract),"en").
-        FILTER regex(?nameArtist, "ren", "i").
+        FILTER regex(?nameArtist, "${inputString}", "i").
     }
 }
 ORDER BY ASC(?name)
@@ -161,11 +157,13 @@ LIMIT 40
     return requestString;
 }
 
-function requestInfosArtists(idArtist) {
-    // gets the information about an artist from its id
-    // useful for the artist page
-    let requestString;
-    requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract ?thumbnail
+
+function requestInfosArtists(idArtist)
+// gets the information about an artist from its id
+// useful for the artist page
+{
+  let requestString;
+  requestString = `SELECT DISTINCT ?wikiPageID ?label ?name ?abstract ?thumbnail ?birthDate ?deathDate
 WHERE {
  ?artist a foaf:Person .
  ?artist dbo:wikiPageID ?wikiPageID .
@@ -186,7 +184,18 @@ WHERE {
  ?artist dbo:abstract ?abstract .
  ?artist dbo:thumbnail ?thumbnail .
  ?thing dbo:author ?artist .
+ OPTIONAL {
+   {
+     ?artist dbo:birthDate ?birthDate .
+     ?artist dbo:deathDate ?deathDate .
 
+   }
+   UNION
+   {
+     ?artist dbp:birthDate ?birthDate .
+     ?artist dbp:deathDate ?deathDate .
+   }
+ }
 
  # Convert name into string
  BIND(STR(?name) AS ?label)
@@ -195,10 +204,9 @@ WHERE {
  FILTER LANGMATCHES(LANG(?name), "en").
  FILTER LANGMATCHES(LANG(?abstract), "en").
 }
-LIMIT 1
-`;
+LIMIT 1`;
 
-    return requestString;
+  return requestString;
 }
 
 function requestOeuvres(NomOeuvres) {
@@ -498,12 +506,11 @@ export async function rechercher(inputString, type) {
         'https://dbpedia.org/sparql?query=' +
         encodeURIComponent(requestString) +
         '&format=json';
-    //console.log(url);
+
 
     try {
         const response = await fetch(url);
         const responseJson = await response.json();
-        console.log(responseJson.results.bindings);
         return responseJson.results.bindings;
     } catch (error) {
         return console.log('Erreur : ' + error);
@@ -511,7 +518,6 @@ export async function rechercher(inputString, type) {
 }
 export async function getInfos(id, type) {
     // Ajout des préfixes
-    let requestString;
     if (type === 'artist') {
         try {
             const resInfos = await callAPI(
@@ -549,9 +555,7 @@ export async function getInfos(id, type) {
             const resOeuvres = await callAPI(
                 addDbpediaPrefixes(getOeuvresMouvement(id)),
             );
-            const res = buildMovementJson(resInfos, resArtistes, resOeuvres);
-            //console.log('res', res);
-            return res;
+            return buildMovementJson(resInfos, resArtistes, resOeuvres);
         } catch (error) {
             return console.log('Erreur : ' + error);
         }

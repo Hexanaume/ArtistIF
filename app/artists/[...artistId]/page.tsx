@@ -1,21 +1,10 @@
 'use client';
 // import { useRouter } from 'next/router';
 
-import DetailledArtist from '@/components/DetailledArtist';
+import DetailledArtist, {
+    ArtistDetailsProps,
+} from '@/components/DetailledArtist';
 import React, { useEffect, useState } from 'react';
-
-type ArtistDetailsProps = {
-    name: string;
-    abstract: string;
-    thumbnail_url: string;
-    movements: Array<{ label: string; wikiPageID: string }>;
-    oeuvres: Array<{
-        wikiPageID: string;
-        name: string;
-        abstract: string;
-        thumbnail_url: string;
-    }>;
-};
 
 export default function ArtistDetails({ params }) {
     console.log(params);
@@ -47,6 +36,8 @@ export default function ArtistDetails({ params }) {
                     picture={artistDetails.thumbnail_url}
                     movements={artistDetails.movements}
                     artworks={artistDetails.oeuvres}
+                    birthDate={artistDetails.birth_date}
+                    deathDate={artistDetails.death_date}
                 />
             )}
         </>

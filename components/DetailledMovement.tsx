@@ -4,20 +4,15 @@ import ImageWithFallback from './ImageWithFallback';
 import Card from '@/components/Card';
 import { truncateText } from '../scripts/utils';
 
-const DetailledCard = ({
-    name,
-    picture,
-    description,
-    oeuvres,
-    artists,
-}) => (
+const DetailledCard = ({ name, picture, description, oeuvres, artists }) => (
     <div className="flex flex-col rounded-lg p-6 shadow-lg">
         <h2 className="mb-4 p-4 text-5xl font-bold">{name}</h2>
-        <div className="mb-4 flex flex-col py-2 md:flex-row">
-            <div className="h-full w-full p-4">
+        <div className="mb-4 flex flex-row justify-center py-2 md:flex-row">
+            <div className="p-4">
                 <ImageWithFallback
                     alt={name}
                     src={picture}
+                    style={{ height: '400px', width: '400px' }}
                     className="rounded-lg object-cover"
                     fallback={
                         <Image src={FALLBACK_IMAGE_URL} alt={'fallback'} />

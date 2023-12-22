@@ -10,6 +10,8 @@ export const buildFullArtistJson = (
     const artistJson = {
         wikiPageID: artist.wikiPageID.value,
         name: artist.label.value,
+        birth_date: artist.birthDate.value,
+        death_date: artist.deathDate.value,
         abstract: artist.abstract.value,
         thumbnail_url: artist.thumbnail.value,
     };
@@ -93,10 +95,8 @@ export const buildMovementJson = (movementResult, resArtistes, resOeuvres) => {
 
     movementJson.oeuvres = oeuvresJson;
     movementJson.artists = artistesJson;
-    console.log(movementJson);
     return movementJson;
 };
-
 export function truncateText(text, maxLength) {
     if (text.length > maxLength) {
         return text.substring(0, maxLength - 3) + '...';
