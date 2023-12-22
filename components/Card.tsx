@@ -1,6 +1,7 @@
 import Image from './Image';
 import Link from './Link';
 import ImageWithFallback from './ImageWithFallback';
+import { useState } from 'react';
 //test
 
 const FALLBACK_IMAGE_URL =
@@ -61,13 +62,26 @@ export interface SearchResult {
     };
 }
 const Card = ({ type, wikiID, title, description, imgSrc }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
     return (
-        <div className="md max-w-[544px] p-4 md:w-1/2 ">
+        <div className="p-4 md:w-1/2">
             <Link href={`/${type}/${wikiID}`} passHref>
                 <div
-                    className={`${
-                        imgSrc && 'h-full'
-                    }  overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60 dark:border-gray-700 `}
+                    className={`${imgSrc && 'h-full'}  
+                    overflow-hidden rounded-md border-2 
+                    border-gray-200 border-opacity-60 transition
+                    ease-in hover:scale-105 hover:border-2 
+                    hover:border-solid hover:border-pink-600 
+                    dark:border-gray-700 dark:hover:border-2 
+                    dark:hover:border-pink-600 `}
                 >
                     <div className="p-0">
                         <ImageWithFallback

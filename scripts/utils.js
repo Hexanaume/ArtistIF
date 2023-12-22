@@ -45,7 +45,7 @@ export const buildArtJson = (artResult) => {
 
     const artJson = {
         wikiPageID: art.wikiPageID.value,
-        thumbnail_url: art.thumbnail.value,
+        thumbnail_url: art.thumbnail?.value,
         name: art.labelArt.value,
         artist: {
             id: art.wikiArtistID.value,
@@ -81,7 +81,7 @@ export const buildMovementJson = (movementResult, resArtistes, resOeuvres) => {
             wikiPageID: artist.wikiPageID.value,
             name: artist.name.value,
             abstract: artist.abstract.value,
-            thumbnail_url: artist.thumbnail.value,
+            thumbnail_url: artist.thumbnail?.value,
         };
     });
 
