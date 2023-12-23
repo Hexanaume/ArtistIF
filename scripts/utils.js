@@ -10,8 +10,8 @@ export const buildFullArtistJson = (
     const artistJson = {
         wikiPageID: artist.wikiPageID.value,
         name: artist.label.value,
-        birth_date: artist.birthDate.value,
-        death_date: artist.deathDate.value,
+        birth_date: artist.birthDate?.value,
+        death_date: artist.deathDate?.value,
         abstract: artist.abstract.value,
         thumbnail_url: artist.thumbnail.value,
     };
