@@ -32,7 +32,7 @@ export default function MouvementDetails({ params }) {
         useState<MouvementDetailsProps | null>(null);
     const getMouvementDetails = async (mouvementId: string) => {
         const res = await fetch(
-            `http://localhost:3000/api/search?query=${encodeURIComponent(
+            `https://artist-if.vercel.app/api/search?query=${encodeURIComponent(
                 mouvementId,
             )}&type=getInfosMouvement`,
         );

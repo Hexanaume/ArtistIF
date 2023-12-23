@@ -14,7 +14,7 @@ export default function ArtistDetails({ params }) {
 
     const getArtistDetails = async (artistId: string) => {
         const res = await fetch(
-            `http://localhost:3000/api/search?query=${encodeURIComponent(
+            `https://artist-if.vercel.app/api/search?query=${encodeURIComponent(
                 artistId,
             )}&type=getInfosArtist`,
         );

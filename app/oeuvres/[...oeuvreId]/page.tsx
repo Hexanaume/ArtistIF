@@ -29,7 +29,7 @@ export default function ArtDetails({ params }) {
     const [artDetails, setArtDetails] = useState<ArtDetailsProps | null>(null);
     const getArtDetails = async (artId: string) => {
         const res = await fetch(
-            `http://localhost:3000/api/search?query=${encodeURIComponent(
+            `https://artist-if.vercel.app/api/search?query=${encodeURIComponent(
                 artId,
             )}&type=getInfosOeuvre`,
         );

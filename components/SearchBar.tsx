@@ -27,9 +27,12 @@ const SearchBar = ({ onSearch, searchType, setErrorMessage }) => {
         console.log('searchType: ' + searchType);
         console.log('searchTerm: ' + searchTerm);
         const res = await fetch(
-            `http://localhost:3000/api/search?query=${encodeURIComponent(
+            `https://artist-if.vercel.app/api/search?query=${encodeURIComponent(
                 searchTerm,
             )}&type=${searchType}`,
+          {
+              method: "GET"
+          }
         );
         console.log('res: ', res);
 

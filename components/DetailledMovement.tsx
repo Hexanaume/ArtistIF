@@ -4,7 +4,7 @@ import ImageWithFallback from './ImageWithFallback';
 import Card from '@/components/Card';
 import { truncateText } from '../scripts/utils';
 
-const DetailledCard = ({ name, picture, description, oeuvres, artists }) => (
+const DetailledCard = ({ name, picture, description, oeuvres, artists, year }) => (
     <div className="flex flex-col rounded-lg p-6 shadow-lg">
         <h2 className="mb-4 p-4 text-5xl font-bold">{name}</h2>
         <div className="mb-4 flex flex-row justify-center py-2 md:flex-row">
