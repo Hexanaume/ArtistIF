@@ -1,3 +1,7 @@
+export const apiUrl =
+    process.env.NODE_ENV === 'production'
+        ? 'https://artist-if.vercel.app'
+        : 'http://localhost:3000';
 export const buildFullArtistJson = (
     artistResult,
     movementsResult,

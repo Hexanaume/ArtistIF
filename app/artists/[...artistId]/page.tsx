@@ -5,6 +5,7 @@ import DetailledArtist, {
     ArtistDetailsProps,
 } from '@/components/DetailledArtist';
 import React, { useEffect, useState } from 'react';
+import { apiUrl } from '../../../scripts/utils';
 
 export default function ArtistDetails({ params }) {
     console.log(params);
@@ -14,7 +15,7 @@ export default function ArtistDetails({ params }) {
 
     const getArtistDetails = async (artistId: string) => {
         const res = await fetch(
-            `https://artist-if.vercel.app/api/search?query=${encodeURIComponent(
+            `${apiUrl}/api/search?query=${encodeURIComponent(
                 artistId,
             )}&type=getInfosArtist`,
         );

@@ -1,7 +1,6 @@
 'use client';
-import SearchButton from '@/components/SearchButton';
 import React, { useState } from 'react';
-import { rechercher } from '../scripts/search.mjs';
+import { apiUrl } from '../scripts/utils';
 
 const SearchBar = ({ onSearch, searchType, setErrorMessage }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -27,12 +26,12 @@ const SearchBar = ({ onSearch, searchType, setErrorMessage }) => {
         console.log('searchType: ' + searchType);
         console.log('searchTerm: ' + searchTerm);
         const res = await fetch(
-            `https://artist-if.vercel.app/api/search?query=${encodeURIComponent(
+            `${apiUrl}/api/search?query=${encodeURIComponent(
                 searchTerm,
             )}&type=${searchType}`,
-          {
-              method: "GET"
-          }
+            {
+                method: 'GET',
+            },
         );
         console.log('res: ', res);
 
@@ -91,8 +90,5 @@ const SearchBar = ({ onSearch, searchType, setErrorMessage }) => {
         </>
     );
 };
-function onSearch() {
-    console.log('test');
-}
 
 export default SearchBar;

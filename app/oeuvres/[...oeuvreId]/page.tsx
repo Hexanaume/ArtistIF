@@ -1,10 +1,7 @@
 'use client';
 import DetailledArt from '@/components/DetailledArt';
-// import { useRouter } from 'next/router';
-
-import DetailledArtist from '@/components/DetailledArtist';
 import React, { useEffect, useState } from 'react';
-import DetailedArt from '@/components/DetailledArt';
+import { apiUrl } from '../../../scripts/utils';
 
 type ArtDetailsProps = {
     name: string;
@@ -29,7 +26,7 @@ export default function ArtDetails({ params }) {
     const [artDetails, setArtDetails] = useState<ArtDetailsProps | null>(null);
     const getArtDetails = async (artId: string) => {
         const res = await fetch(
-            `https://artist-if.vercel.app/api/search?query=${encodeURIComponent(
+            `${apiUrl}/api/search?query=${encodeURIComponent(
                 artId,
             )}&type=getInfosOeuvre`,
         );
