@@ -12,11 +12,11 @@ Notre starter de projet pour la partie front end :
 [MIT](https://github.com/timlrx/tailwind-nextjs-starter-blog/blob/main/LICENSE) © [Timothy Lin](https://www.timlrx.com)
 
 ## Installation et configuration de l'espace de travail
-* Comme nous avons déployé le site sur Vercel, il n’y a pas besoin de beaucoup d’étapes pour visualiser le site et y naviguer comme un utilisateur lambda.
-* Il suffit de se rendre sur l’url suivante : https://artist-if.vercel.app/.
-* Dans un souci de configuration de l’espace de travail, qui pourrait s’avérer complexe en fonction de votre matériel et système d’exploitation, nous vous conseillons d’utiliser cette version déployée.
-* Cependant, si vous voulez lancer le site en local, voici la liste des étapes à suivre :
-* Vous devrez avoir Node.js (v.20.10.0) ainsi que qu’un gestionnaire de package tel que npm ou yarn. 
+Comme nous avons déployé le site sur Vercel, il n’y a pas besoin de beaucoup d’étapes pour visualiser le site et y naviguer comme un utilisateur lambda.
+Il suffit de se rendre sur l’url suivante : https://artist-if.vercel.app/.
+Dans un souci de configuration de l’espace de travail, qui pourrait s’avérer complexe en fonction de votre matériel et système d’exploitation, nous vous conseillons d’utiliser cette version déployée.
+Cependant, si vous voulez lancer le site en local, voici la liste des étapes à suivre :
+Vous devrez avoir Node.js (v.20.10.0) ainsi que qu’un gestionnaire de package tel que npm ou yarn. 
 
 ### Node.js et npm
 Vous pouvez télécharger node sur le lien suivant : https://nodejs.org/en. NPM est fourni par défaut avec le téléchargement de Node.js. Si ce n’est pas le cas, vous pouvez télécharger npm sur le lien suivant https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
