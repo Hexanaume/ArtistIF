@@ -15,31 +15,21 @@ Notre starter de projet pour la partie front end :
 
 Vous devrez avoir Node.js (v.20.10.0) ainsi que qu’un gestionnaire de package tel que npm ou yarn. 
 
-# Node.js et npm
-Vous pouvez télécharger node sur le lien suivant : https://nodejs.org/en . NPM est fourni par défaut avec le téléchargement de Node.js. Si ce n’est pas le cas, vous pouvez télécharger npm sur le lien suivant https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+### Node.js et npm
+Vous pouvez télécharger node sur le lien suivant : https://nodejs.org/en. NPM est fourni par défaut avec le téléchargement de Node.js. Si ce n’est pas le cas, vous pouvez télécharger npm sur le lien suivant https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
 
+* Cloner le repo git présent au lien suivant : https://github.com/Hexanaume/ArtistIF.git
 
-Cloner le repo git présent au lien suivant : https://github.com/Hexanaume/ArtistIF.git
-Commande : git clone https://github.com/Hexanaume/ArtistIF.git
+``` bash 
+git clone https://github.com/Hexanaume/ArtistIF.git
+```
 
-Installer yarn si il n’est pas sur votre machine. Cela peut se faire avec la commande npm install --global yarn dans un terminal ouvert sur votre répertoire de travail. 
-N.B : il faut également avoir yarn et node d’installés (https://www.npmjs.com/)
+* Installer yarn s'il n’est pas sur votre machine. Cela peut se faire avec la commande 
+`npm install --global yarn` dans un terminal ouvert sur votre répertoire de travail. 
 
-# Modifier les url des appels à l’api pour les passer en local : 
-Dans les fichiers suivants :
-app/artists/[…artistId]/page.tsx, ligne 17
-app/mouvement/[…mouvementId]/page.tsx, ligne 35
-app/oeuvres/[…oeuvreId]/page.tsx, ligne 32
-components/SearchBar.tsx, ligne 30
+* Se placer au niveau du répertoire source du projet (Artistif) et lancer la commande `yarn install` dans votre terminal.
+* Lancer la commande `yarn dev` dans votre terminal.
+* Ouvrir l’url suivante http://localhost:3000/ , et Artistif s’affiche ! Vous pouvez alors naviguer d’une façon intuitive sur notre moteur de recherche.
 
-Remplacer l’url par la suivante : http://localhost:3000/api/search?query=${encodeURIComponent(
-                searchTerm,
-            )}&type=${searchType}
-
-Remarque : cette opération est nécessaire car dans un soucis de mise en production de notre application, nous avons dû push une version sur la branche principale du git, contenant les URL du domaine public. Lors d’un push sur la branche “main”, une pipeline de déploiement continu est activée par la plateforme Vercel, et l’application est déployée sur l’url accessible publiquement : https://artist-if.vercel.app/ 
-
-Lancer la commande « yarn dev » dans votre terminal.
-Ouvrir l’url suivante http://localhost:3000/ , et Artistif s’affiche ! Vous pouvez alors naviguer d’une façon intuitive sur notre moteur de recherche.
-
-Note :  Dans le fichier Artistif/package.json, la variable d’environnement INIT_CWD
+**Note:**  Dans le fichier Artistif/package.json, la variable d’environnement INIT_CWD
 dépend du système d’exploitation, elle doit être égale à %cd% sur des Windows et à PWD sur des Macs.
